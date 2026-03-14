@@ -23,21 +23,24 @@ export default function LandingCarousel() {
 
   const variants = {
     enter: (direction: number) => ({
-      x: direction > 0 ? 1000 : -1000,
+      x: direction > 0 ? 800 : -800,
       opacity: 0,
-      scale: 0.95
+      scale: 0.8,
+      rotateY: direction > 0 ? 15 : -15,
     }),
     center: {
       zIndex: 1,
       x: 0,
       opacity: 1,
-      scale: 1
+      scale: 1,
+      rotateY: 0,
     },
     exit: (direction: number) => ({
       zIndex: 0,
-      x: direction < 0 ? 1000 : -1000,
+      x: direction < 0 ? 800 : -800,
       opacity: 0,
-      scale: 0.95
+      scale: 0.8,
+      rotateY: direction < 0 ? -15 : 15,
     })
   };
 
@@ -54,15 +57,9 @@ export default function LandingCarousel() {
   const slide = slides[current];
 
   return (
-    <div className="w-full min-h-screen bg-[#F8FAF8] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 font-sans overflow-hidden">
+    <div className="w-full min-h-screen bg-[#F8FAF8] flex items-center justify-center py-6 sm:py-12 px-2 sm:px-6 lg:px-8 font-sans overflow-hidden relative selection:bg-[#789D8E] selection:text-white">
       
-      {/* Background Decorations */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#789D8E] rounded-full blur-[120px] opacity-20"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#E9C46A] rounded-full blur-[120px] opacity-20"></div>
-      </div>
-
-      <div className="relative z-10 w-full max-w-4xl mx-auto flex flex-col h-[85vh] sm:h-[70vh] min-h-[600px]">
+      <div className="relative z-10 w-full max-w-5xl mx-auto flex flex-col h-[90vh] sm:h-[80vh] min-h-[650px] perspective-1000">
         
         <ProgressIndicators 
           total={slides.length} 
@@ -71,7 +68,7 @@ export default function LandingCarousel() {
         />
 
         {/* Carousel Container */}
-        <div className="flex-1 relative bg-white/60 backdrop-blur-xl rounded-3xl sm:rounded-[2.5rem] shadow-2xl border border-white/50 overflow-hidden flex flex-col">
+        <div className="flex-1 relative bg-white rounded-3xl sm:rounded-[2.5rem] border border-gray-200 overflow-hidden flex flex-col transform-gpu">
           
           <AnimatePresence initial={false} custom={direction} mode="wait">
             <motion.div
@@ -82,11 +79,12 @@ export default function LandingCarousel() {
               animate="center"
               exit="exit"
               transition={{
-                x: { type: "spring", stiffness: 300, damping: 30 },
-                opacity: { duration: 0.2 },
-                scale: { duration: 0.2 }
+                x: { type: "spring", stiffness: 250, damping: 25 },
+                opacity: { duration: 0.3 },
+                scale: { duration: 0.3 },
+                rotateY: { duration: 0.4 }
               }}
-              className="flex-1 w-full h-full flex flex-col justify-center p-8 sm:p-12 md:p-16"
+              className="flex-1 w-full h-full flex flex-col justify-center p-6 sm:p-12 md:p-20"
             >
               <SlideContent slide={slide} />
             </motion.div>
@@ -100,22 +98,24 @@ export default function LandingCarousel() {
         </div>
         
         {/* Footer */}
-        <div className="mt-6 text-center text-gray-500 text-sm font-medium">
-          Slide {current + 1} of {slides.length} • Gunakan tombol panah untuk navigasi
-        </div>
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="mt-6 text-center text-gray-500 text-sm font-medium tracking-wide flex items-center justify-center gap-2"
+        >
+          <span className="w-2 h-2 rounded-full bg-[#789D8E]"></span>
+          Slide {current + 1} of {slides.length} • Digitalisasi Sekolah Masa Depan
+        </motion.div>
       </div>
 
       <style dangerouslySetInnerHTML={{__html: `
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background-color: rgba(120, 157, 142, 0.3);
-          border-radius: 20px;
-        }
+        .perspective-1000 { perspective: 1000px; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: rgba(120, 157, 142, 0.4); border-radius: 20px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background-color: rgba(120, 157, 142, 0.8); }
+        ::selection { background-color: #789D8E; color: white; }
       `}} />
     </div>
   );
