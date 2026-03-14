@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
+
+* {
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+:root {
+  --background: #f8faf8;
+  --primary: #789d8e;
+  --secondary: #e9c46a;
+  --text: #2d3436;
+  --paragraf: #636e72;
+}
