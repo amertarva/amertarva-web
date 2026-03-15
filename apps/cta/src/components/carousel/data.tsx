@@ -213,8 +213,8 @@ export const slides: SlideData[] = [
 
         <div className="w-full max-w-md flex flex-col sm:flex-row gap-4 pt-4">
           <div className="flex-1 flex flex-col items-center justify-center gap-1 px-8 py-3 bg-gray-100 text-gray-500 font-bold rounded-2xl border border-gray-200 cursor-not-allowed">
-            <span className="font-[600] text-lg tracking-wide uppercase">Coming Soon</span>
-            <span className="text-xs font-medium text-gray-400">Sedang dalam pengembangan</span>
+            <span className="font-[600] text-lg tracking-wide uppercase text-orange-600/80">Under Maintenance</span>
+            <span className="text-xs font-medium text-gray-400">Website sedang diperbarui</span>
           </div>
           
           <a href="https://instagram.com/amertarva" target="_blank" rel="noopener noreferrer" 
