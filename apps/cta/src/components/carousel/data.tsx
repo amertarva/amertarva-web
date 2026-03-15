@@ -30,13 +30,13 @@ export const slides: SlideData[] = [
     body: (
       <div className="space-y-6">
         <div className="p-6 sm:p-8 bg-gray-50 rounded-2xl border border-gray-100 transition-all duration-300 overflow-hidden group">
-          <p className="text-gray-700 leading-relaxed text-lg sm:text-xl font-medium font-sans">
+          <p className="text-gray-700 leading-relaxed text-base sm:text-xl font-medium font-sans">
             Anak-anak hari ini tumbuh bersama internet dan informasi instan. Namun di banyak sekolah Indonesia, proses belajar masih berjalan seperti <span className="text-gray-900 font-bold bg-[#E9C46A]/20 px-2 py-0.5 rounded-md">20–30 tahun lalu</span>: papan tulis, buku cetak, absensi kertas.
           </p>
         </div>
         <div className="flex items-start gap-4 p-5 rounded-2xl bg-red-50 border border-red-100 overflow-hidden">
           <AlertTriangle className="w-6 h-6 text-red-500 shrink-0 mt-0.5" />
-          <p className="text-gray-700 leading-relaxed text-lg font-medium">
+          <p className="text-gray-700 leading-relaxed text-base sm:text-lg font-medium">
             Bukan salah gurunya. Tapi jika cara mengajar tidak beradaptasi, ada satu risiko besar yang diam-diam terjadi: <span className="font-bold text-red-600 bg-red-100/50 px-2 py-0.5 rounded-md">siswa kehilangan minat belajar.</span>
           </p>
         </div>
@@ -57,7 +57,7 @@ export const slides: SlideData[] = [
           { text: "Guru menghabiskan 11 jam/minggu hanya untuk administrasi manual", source: "Riset Global", color: "bg-purple-50", border: "border-purple-100", textC: "text-purple-500" },
         ].map((item, idx) => (
           <div key={idx} className={`flex flex-col justify-between p-5 rounded-2xl ${item.color} border ${item.border} transition-transform duration-300`}>
-            <p className="text-gray-800 font-semibold text-lg mb-3 leading-snug">{item.text}</p>
+            <p className="text-gray-800 font-semibold text-base sm:text-lg mb-3 leading-snug">{item.text}</p>
             <div className="flex items-center gap-2 mt-auto">
               <span className={`w-2 h-2 rounded-full ${item.textC.replace('text-', 'bg-')}`}></span>
               <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">{item.source}</span>
@@ -96,7 +96,7 @@ export const slides: SlideData[] = [
                 <div className="bg-red-100 p-2 rounded-lg group-hover:scale-110 group-hover:rotate-12 transition-transform">
                   <FileX className="w-5 h-5 text-red-500" />
                 </div>
-                <p className="text-gray-700 font-medium sm:text-lg">{item}</p>
+                <p className="text-gray-700 font-medium text-sm sm:text-lg">{item}</p>
               </div>
             ))}
           </div>
@@ -140,8 +140,8 @@ export const slides: SlideData[] = [
     subline: "Banyak yang gagal karena salah fokus.",
     body: (
       <div className="space-y-6">
-        <p className="text-gray-700 leading-relaxed text-lg sm:text-xl bg-gray-50 p-5 rounded-xl border border-gray-100">
-          Digitalisasi sejati bukan soal proyektor canggih. Fokusnya adalah pada <span className="font-black text-[#789D8E] tracking-wider uppercase text-xl inline-block px-1">Sistem Terintegrasi</span>.
+        <p className="text-gray-700 leading-relaxed text-base sm:text-xl bg-gray-50 p-5 rounded-xl border border-gray-100">
+          Digitalisasi sejati bukan soal proyektor canggih. Fokusnya adalah pada <span className="font-black text-[#789D8E] tracking-wider uppercase text-lg sm:text-xl inline-block px-1">Sistem Terintegrasi</span>.
         </p>
         <div className="space-y-3">
           <p className="font-bold text-gray-800 text-lg uppercase tracking-wide text-sm mb-4">Pilar Sistem Digital :</p>
@@ -154,7 +154,7 @@ export const slides: SlideData[] = [
               <div className="bg-[#789D8E] p-1.5 rounded-full group-hover:scale-110 transition-transform">
                 <Check className="w-5 h-5 text-white" strokeWidth={3} />
               </div>
-              <p className="text-gray-800 font-semibold sm:text-lg">{item}</p>
+              <p className="text-gray-800 font-semibold text-base sm:text-lg">{item}</p>
             </div>
           ))}
         </div>
@@ -168,17 +168,17 @@ export const slides: SlideData[] = [
     subline: "Transformasi besar dimulai dari kebiasaan kecil.",
     body: (
       <div className="space-y-8 max-w-2xl mx-auto py-2">
-        <div className="flex items-start justify-between relative before:absolute before:left-0 before:right-0 before:h-1 before:bg-gray-200 before:top-6 before:-translate-y-1/2 before:z-0 px-2 sm:px-6">
+        <div className="flex items-start justify-between relative before:absolute before:left-2 before:right-2 sm:before:left-0 sm:before:right-0 before:h-1 before:bg-gray-200 before:top-5 sm:before:top-6 before:-translate-y-1/2 before:z-0 px-0 sm:px-6">
           {[
             { label: "Mulai", icon: "1", color: "bg-[#F8FAF8] text-[#789D8E] border-[#789D8E]" },
             { label: "Otomasi", icon: "2", color: "bg-[#789D8E] text-white border-[#789D8E]" },
             { label: "Ekosistem", icon: "3", color: "bg-[#E9C46A] text-white border-[#E9C46A]" }
           ].map((step, i) => (
-            <div key={i} className="relative z-10 flex flex-col items-center gap-3">
-              <div className={`w-12 h-12 rounded-full border-4 flex items-center justify-center font-black text-xl ${step.color}`}>
+            <div key={i} className="relative z-10 flex flex-col items-center gap-2 sm:gap-3">
+              <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full border-4 flex items-center justify-center font-black text-lg sm:text-xl ${step.color}`}>
                 {step.icon}
               </div>
-              <span className="font-bold text-gray-700 text-sm sm:text-base uppercase tracking-wider drop-shadow-sm">{step.label}</span>
+              <span className="font-bold text-gray-700 text-[10px] sm:text-base uppercase tracking-wider drop-shadow-sm text-center">{step.label}</span>
             </div>
           ))}
         </div>

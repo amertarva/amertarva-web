@@ -30,7 +30,7 @@ function ScrollSection({
           opacity: useTransform(scrollYProgress, [0, 1], [0, 0.4]),
           y: useTransform(scrollYProgress, [0, 1], [50, -20]),
         }}
-        className="absolute -top-10 left-0 sm:left-[-10%] text-[10rem] sm:text-[18rem] font-black text-gray-200/60 leading-none select-none z-0 pointer-events-none tracking-tighter"
+        className="absolute top-0 sm:-top-10 left-[-5%] sm:left-[-10%] text-[8rem] sm:text-[18rem] font-black text-gray-200/60 leading-none select-none z-0 pointer-events-none tracking-tighter"
       >
         0{index + 1}
       </motion.div>
@@ -80,19 +80,19 @@ export default function LandingScroll() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-orange-200 bg-orange-50 text-orange-600 font-bold text-sm tracking-widest uppercase mb-8">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-orange-200 bg-orange-50 text-orange-600 font-bold text-sm tracking-widest uppercase mb-8 mt-10 sm:mt-0">
               <span className="relative flex h-2 w-2">
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
               </span>
               Under Maintenance
             </div>
 
-            <h1 className="text-5xl sm:text-6xl md:text-7xl font-black text-gray-900 leading-[1.1] mb-6 tracking-tight">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black text-gray-900 leading-[1.1] mb-4 sm:mb-6 tracking-tight px-2">
               Transformasi <br className="hidden sm:block" />
               Sekolah ke Era <span className="text-[#789D8E]">Digital.</span>
             </h1>
 
-            <p className="text-xl sm:text-2xl text-gray-500 font-medium max-w-2xl mx-auto mb-12">
+            <p className="text-lg sm:text-2xl text-gray-500 font-medium max-w-2xl mx-auto mb-10 sm:mb-12 px-4">
               Bukan sekadar mengganti kertas, tapi membangun sistem yang bekerja
               untuk Anda.
             </p>
