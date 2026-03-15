@@ -19,10 +19,6 @@ function ScrollSection({
     offset: ["start 90%", "center center"],
   });
 
-  const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
-  const y = useTransform(scrollYProgress, [0, 1], [100, 0]);
-  const scale = useTransform(scrollYProgress, [0, 1], [0.95, 1]);
-
   return (
     <div
       className="w-full min-h-[70vh] flex flex-col justify-center py-20 relative"
@@ -40,7 +36,10 @@ function ScrollSection({
       </motion.div>
 
       <motion.div
-        style={{ opacity, y, scale }}
+        initial={{ opacity: 0, y: 70 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-15%" }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="relative z-10 w-full"
       >
         {children}
