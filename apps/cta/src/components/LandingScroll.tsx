@@ -70,8 +70,12 @@ export default function LandingScroll() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
-            <div className="inline-block px-4 py-1.5 rounded-full border border-gray-200 bg-white text-[#789D8E] font-semibold text-sm tracking-widest uppercase mb-8">
-              Amertarva Digitalisasi
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#E9C46A]/30 bg-[#E9C46A]/10 text-yellow-600 font-bold text-sm tracking-widest uppercase mb-8">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-500"></span>
+              </span>
+              Coming Soon
             </div>
             
             <h1 className="text-5xl sm:text-6xl md:text-7xl font-black text-gray-900 leading-[1.1] mb-6 tracking-tight">

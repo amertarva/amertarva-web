@@ -113,12 +113,12 @@ export const slides: SlideData[] = [
       <div className="space-y-6">
         <div className="grid gap-4 sm:grid-cols-3">
           {[
-            { country: "Finlandia", text: "Literasi naik 29% dalam 4 tahun", flag: "🇫🇮" },
-            { country: "Singapura", text: "91% sekolah paperless", flag: "🇸🇬" },
-            { country: "India", text: "1.5 juta sekolah digital", flag: "🇮🇳" }
+            { country: "Finlandia", text: "Literasi naik 29% dalam 4 tahun", flagCode: "fi" },
+            { country: "Singapura", text: "91% sekolah paperless", flagCode: "sg" },
+            { country: "India", text: "1.5 juta sekolah digital", flagCode: "in" }
           ].map((item, idx) => (
             <div key={idx} className="flex flex-col items-center text-center p-5 rounded-2xl bg-white border border-gray-200 transition-transform duration-300">
-              <span className="text-4xl mb-3">{item.flag}</span>
+              <span className={`fi fi-${item.flagCode} text-4xl mb-3 rounded-sm drop-shadow-sm`} style={{ fontSize: '3rem' }}></span>
               <h4 className="font-black text-gray-900 text-xl mb-2">{item.country}</h4>
               <p className="text-gray-600 font-medium text-sm sm:text-base">{item.text}</p>
             </div>
@@ -212,11 +212,10 @@ export const slides: SlideData[] = [
         </p>
 
         <div className="w-full max-w-md flex flex-col sm:flex-row gap-4 pt-4">
-          <a href="https://amertarva.id" target="_blank" rel="noopener noreferrer" 
-            className="flex-1 group inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#789D8E] text-white font-bold rounded-2xl transition-all hover:bg-[#608b7a]">
-            <span className="font-[600] text-lg tracking-wide">Coba Gratis</span>
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </a>
+          <div className="flex-1 flex flex-col items-center justify-center gap-1 px-8 py-3 bg-gray-100 text-gray-500 font-bold rounded-2xl border border-gray-200 cursor-not-allowed">
+            <span className="font-[600] text-lg tracking-wide uppercase">Coming Soon</span>
+            <span className="text-xs font-medium text-gray-400">Sedang dalam pengembangan</span>
+          </div>
           
           <a href="https://instagram.com/amertarva" target="_blank" rel="noopener noreferrer" 
             className="flex-1 inline-flex items-center justify-center px-8 py-4 bg-white border border-gray-200 text-gray-900 font-bold rounded-2xl hover:bg-gray-50 transition-all">
