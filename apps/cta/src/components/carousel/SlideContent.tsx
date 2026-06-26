@@ -13,32 +13,46 @@ export default function SlideContent({ slide }: SlideContentProps) {
     <div className="max-w-4xl mx-auto w-full flex flex-col justify-center">
       {/* Slide Header */}
       <div className="mb-6 sm:mb-10 flex flex-col items-center text-center">
-        
-        <motion.div 
+        <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           whileInView={{ scale: 1, opacity: 1 }}
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.1 }}
+          transition={{
+            type: "spring",
+            stiffness: 200,
+            damping: 20,
+            delay: 0.1,
+          }}
           className="mb-4 sm:mb-6 w-14 h-14 sm:w-20 sm:h-20 bg-[#F8FAF8] rounded-2xl flex items-center justify-center border border-gray-100 flex-shrink-0"
         >
           <Icon className="w-7 h-7 sm:w-10 sm:h-10 text-[#789D8E]" />
         </motion.div>
-        
-        <motion.h2 
+
+        <motion.h2
           initial={{ y: 30, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.2 }}
+          transition={{
+            type: "spring",
+            stiffness: 100,
+            damping: 20,
+            delay: 0.2,
+          }}
           className="text-2xl sm:text-4xl md:text-5xl font-black text-gray-900 leading-tight mb-3 sm:mb-4 tracking-tight px-2"
         >
           {slide.headline}
         </motion.h2>
-        
-        <motion.p 
+
+        <motion.p
           initial={{ y: 30, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.3 }}
+          transition={{
+            type: "spring",
+            stiffness: 100,
+            damping: 20,
+            delay: 0.3,
+          }}
           className="text-base sm:text-xl md:text-2xl text-[#E9C46A] font-bold tracking-tight max-w-2xl px-2 sm:px-4"
         >
           {slide.subline}
@@ -47,16 +61,19 @@ export default function SlideContent({ slide }: SlideContentProps) {
 
       {/* Slide Body */}
       {slide.body && (
-        <motion.div 
+        <motion.div
           initial={{ y: 40, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.4 }}
+          transition={{
+            type: "spring",
+            stiffness: 100,
+            damping: 20,
+            delay: 0.4,
+          }}
           className="mt-6 sm:mt-8 text-left w-full px-2 sm:px-0"
         >
-          <div className="max-w-3xl mx-auto">
-            {slide.body}
-          </div>
+          <div className="max-w-3xl mx-auto">{slide.body}</div>
         </motion.div>
       )}
     </div>

@@ -1,0 +1,42 @@
+:root,
+[data-theme="amerta-day"] {
+  --color-base: 248 250 248; /* #F8FAF8 */
+  --color-secondary: 120 157 142; /* #789D8E */
+  --color-accent: 233 196 106; /* #E9C46A */
+  --color-heading: 45 52 54; /* #2D3436 */
+  --color-body: 99 110 114; /* #636E72 */
+  --color-accent-contrast: 45 52 54; /* #2D3436 */
+  --color-secondary-dark: 78 107 95; /* #4E6B5F */
+  --color-accent-dark: 176 139 42; /* #B08B2A */
+}
+
+[data-theme="amerta-night"] {
+  --color-base: 26 31 29; /* #1A1F1D */
+  --color-secondary: 136 169 155; /* #88A99B */
+  --color-accent: 244 211 94; /* #F4D35E */
+  --color-heading: 232 237 234; /* #E8EDEA */
+  --color-body: 160 168 164; /* #A0A8A4 */
+  --color-accent-contrast: 17 20 18; /* #111412 (dark obsidian/black) */
+  --color-secondary-dark: 168 201 187; /* #A8C9BB */
+  --color-accent-dark: 244 211 94; /* #F4D35E */
+}
+
+html {
+  background-color: rgb(var(--color-base));
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: rgb(var(--color-heading));
+}
+
+p {
+  color: rgb(var(--color-body));
+}

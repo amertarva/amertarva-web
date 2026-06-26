@@ -6,7 +6,10 @@ interface NavigationControlsProps {
   onNext: () => void;
 }
 
-export default function NavigationControls({ onPrev, onNext }: NavigationControlsProps) {
+export default function NavigationControls({
+  onPrev,
+  onNext,
+}: NavigationControlsProps) {
   return (
     <>
       <div className="absolute inset-y-0 left-0 w-16 sm:w-24 flex items-center justify-start pl-2 sm:pl-6 pointer-events-none z-20">
@@ -18,7 +21,7 @@ export default function NavigationControls({ onPrev, onNext }: NavigationControl
           <ChevronLeft className="w-6 h-6" />
         </button>
       </div>
-      
+
       <div className="absolute inset-y-0 right-0 w-16 sm:w-24 flex items-center justify-end pr-2 sm:pr-6 pointer-events-none z-20">
         <button
           onClick={onNext}

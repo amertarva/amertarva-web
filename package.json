@@ -9,7 +9,11 @@
     "check-types": "turbo run check-types"
   },
   "devDependencies": {
+    "@nuxtjs/tailwindcss": "^6.14.0",
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.15",
     "prettier": "^3.7.4",
+    "tailwindcss": "3",
     "turbo": "^2.8.7",
     "typescript": "5.9.2"
   },
@@ -20,8 +24,5 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ],
-  "overrides": {
-    "lru-cache": "5.1.1"
-  }
+  ]
 }

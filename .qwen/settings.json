@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir *)",
+      "Bash(bun *)",
+      "Bash(curl *)",
+      "Bash(netstat *)",
+      "Bash(findstr *)",
+      "Bash(wmic *)",
+      "Bash(taskkill *)",
+      "Bash(timeout *)",
+      "Bash(start *)",
+      "Bash(type *)",
+      "Bash(tasklist *)",
+      "Agent(Explore)",
+      "Bash(del *)",
+      "Bash(rmdir *)",
+      "Bash(dir *)"
+    ]
+  },
+  "$version": 4
+}
