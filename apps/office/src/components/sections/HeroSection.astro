@@ -1,0 +1,85 @@
+---
+import { hero } from '../../data/hero'
+import { ArrowRight, LayoutDashboard, Star, Users } from 'lucide-astro'
+---
+
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-base">
+  {/* Layer 1: Background image */}
+  <div class="absolute inset-0 z-0">
+    <div class="absolute inset-0 bg-black/20 dark:bg-black/40 z-[1]"></div>
+    <img
+      src="/assets/hero.jpg"
+      alt="Amertarva Office Platform"
+      class="h-full w-full object-cover relative z-0"
+    />
+    {/* Gradients tailored to base/dark theme */}
+    <div class="absolute inset-0 bg-gradient-to-r from-base/70 via-base/30 to-transparent z-[2] backdrop-blur-[2px]"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-base/80 via-transparent to-transparent z-[2]"></div>
+  </div>
+
+  {/* Layer 2: Content */}
+  <div class="container relative z-10 mx-auto px-6 md:px-12 flex flex-col lg:flex-row items-center pt-24 pb-12 max-w-7xl">
+    <div class="w-full lg:w-2/3 xl:w-3/5 text-left">
+      <span
+        class="inline-block rounded-full border border-secondary/40 bg-secondary/10 backdrop-blur-md px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-secondary mb-6"
+      >
+        {hero.badge}
+      </span>
+
+      <h1
+        class="text-4xl md:text-5xl lg:text-7xl font-bold text-heading leading-tight mb-6 font-serif"
+        style="white-space: pre-line;"
+      >
+        {hero.title}
+      </h1>
+
+      <p class="text-lg md:text-xl text-body mb-10 max-w-2xl leading-relaxed">
+        {hero.subtitle}
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center gap-4 mb-14">
+        <a
+          href={hero.ctaPrimary.href}
+          class="w-full sm:w-auto px-8 py-4 rounded-full bg-secondary hover:bg-secondary/90 text-heading font-bold transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(233,196,106,0.3)] hover:shadow-[0_0_30px_rgba(233,196,106,0.5)] hover:-translate-y-1"
+        >
+          {hero.ctaPrimary.label}
+          <ArrowRight class="w-5 h-5" strokeWidth="2" />
+        </a>
+        
+        <a
+          href={hero.ctaSecondary.href}
+          class="w-full sm:w-auto px-8 py-4 rounded-full bg-heading/5 hover:bg-heading/10 border border-heading/10 text-heading font-semibold transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-md hover:-translate-y-1"
+        >
+          {hero.ctaSecondary.label}
+          <LayoutDashboard class="w-5 h-5" strokeWidth="2" />
+        </a>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-8 md:gap-16 pt-8 border-t border-heading/10">
+        <div>
+          <div class="flex items-center gap-1 text-secondary mb-2">
+            <Star class="w-5 h-5 fill-current" strokeWidth="2" />
+            <Star class="w-5 h-5 fill-current" strokeWidth="2" />
+            <Star class="w-5 h-5 fill-current" strokeWidth="2" />
+            <Star class="w-5 h-5 fill-current" strokeWidth="2" />
+            <Star class="w-5 h-5 fill-current" strokeWidth="2" />
+          </div>
+          <p class="text-body text-sm"><strong class="text-heading text-base">4.9/5</strong> Enterprise Rated</p>
+        </div>
+        
+        <div class="flex items-center gap-4">
+          <div class="p-3 rounded-xl bg-accent/10 border border-accent/20">
+            <Users class="w-6 h-6 text-accent" strokeWidth="2" />
+          </div>
+          <div>
+            <p class="text-heading font-bold text-xl leading-none mb-1">Trusted By</p>
+            <p class="text-body text-sm opacity-80">{hero.trustLine}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  {/* Seamless Transition Gradient to Next Section */}
+  <div class="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-base via-base/80 to-transparent pointer-events-none z-0"></div>
+</section>

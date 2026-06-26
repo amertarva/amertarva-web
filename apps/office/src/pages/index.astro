@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import Navbar from '../components/Navbar.astro'
+import HeroSection from '../components/sections/HeroSection.astro'
+import AboutSection from '../components/sections/AboutSection.astro'
+import ProductsSection from '../components/sections/ProductsSection.astro'
+import WhySection from '../components/sections/WhySection.astro'
+import CtaSection from '../components/sections/CtaSection.astro'
+---
+
+<BaseLayout>
+  <Navbar />
+  <main>
+    <HeroSection />
+    <AboutSection />
+    <WhySection />
+   <ProductsSection />
+    <CtaSection />
+  </main>
+
+  <footer class="border-t border-secondary/15 py-8">
+    <div class="mx-auto max-w-6xl px-6 text-center">
+      <p class="text-xs text-body opacity-50">
+        © {new Date().getFullYear()} Amertarva. All rights reserved.
+      </p>
+    </div>
+  </footer>
+</BaseLayout>

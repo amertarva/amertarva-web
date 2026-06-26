@@ -1,0 +1,75 @@
+---
+import ThemeToggle from './ThemeToggle.astro'
+import { Sun, ArrowRight } from 'lucide-astro'
+---
+
+<header 
+  id="main-nav" 
+  data-scrolled="false"
+  class="fixed left-1/2 -translate-x-1/2 z-50 transition-all duration-500 border 
+         data-[scrolled=false]:top-0 data-[scrolled=false]:w-full data-[scrolled=false]:max-w-7xl data-[scrolled=false]:py-8 data-[scrolled=false]:px-6 data-[scrolled=false]:md:px-12 data-[scrolled=false]:bg-transparent data-[scrolled=false]:border-transparent data-[scrolled=false]:shadow-none 
+         data-[scrolled=true]:top-4 data-[scrolled=true]:md:top-6 data-[scrolled=true]:w-[95%] data-[scrolled=true]:md:w-[85%] data-[scrolled=true]:max-w-5xl data-[scrolled=true]:bg-base/80 data-[scrolled=true]:backdrop-blur-2xl data-[scrolled=true]:shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:data-[scrolled=true]:shadow-[0_8px_30px_rgb(0,0,0,0.2)] data-[scrolled=true]:border-heading/10 data-[scrolled=true]:rounded-full data-[scrolled=true]:py-2.5 data-[scrolled=true]:px-5 data-[scrolled=true]:md:px-8"
+>
+  <div class="mx-auto flex items-center justify-between w-full">
+    <a href="/" class="flex items-center gap-2 text-heading group z-10">
+      <div class="relative flex items-center">
+        <span class="text-2xl font-serif tracking-wide text-heading transition-colors group-hover:text-secondary">
+          amertar
+        </span>
+        <div class="relative flex flex-col items-center justify-center">
+          <Sun class="w-5 h-5 text-secondary absolute -top-3.5 opacity-90 group-hover:opacity-100 group-hover:rotate-45 transition-all duration-500" strokeWidth="2" />
+          <span class="text-2xl font-serif tracking-wide text-heading transition-colors group-hover:text-secondary">
+            v
+          </span>
+        </div>
+        <span class="text-2xl font-serif tracking-wide text-heading transition-colors group-hover:text-secondary">
+          a
+        </span>
+      </div>
+      <span class="ml-1 rounded-md bg-secondary/10 border border-secondary/30 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-secondary">
+        Office
+      </span>
+    </a>
+
+    <div class="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2 z-0">
+      <a href="#products" class="text-[15px] font-semibold text-heading/80 hover:text-heading transition-colors relative after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-0 after:bg-secondary after:transition-all after:duration-300 hover:after:w-full">
+        Products
+      </a>
+      <a href="#why" class="text-[15px] font-semibold text-heading/80 hover:text-heading transition-colors relative after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-0 after:bg-secondary after:transition-all after:duration-300 hover:after:w-full">
+        Why Us
+      </a>
+      <a href="#cta" class="text-[15px] font-semibold text-heading/80 hover:text-heading transition-colors relative after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-0 after:bg-secondary after:transition-all after:duration-300 hover:after:w-full">
+        Contact
+      </a>
+    </div>
+
+    <div class="flex items-center gap-4 z-10">
+      <ThemeToggle />
+      <a
+        href="mailto:office@amertarva.app"
+        class="hidden sm:flex items-center gap-2 rounded-full bg-heading text-base text-sm font-semibold transition-all duration-300 hover:scale-105 hover:bg-secondary hover:text-heading px-6 py-2.5 shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] dark:shadow-[0_4px_14px_0_rgba(255,255,255,0.05)]"
+      >
+        Get in Touch
+        <ArrowRight class="w-4 h-4" strokeWidth="2" />
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const nav = document.getElementById('main-nav');
+  
+  const handleScroll = () => {
+    if (window.scrollY > 20) {
+      nav?.setAttribute('data-scrolled', 'true');
+    } else {
+      nav?.setAttribute('data-scrolled', 'false');
+    }
+  };
+
+  // Add scroll listener
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  
+  // Initial check on load
+  handleScroll();
+</script>

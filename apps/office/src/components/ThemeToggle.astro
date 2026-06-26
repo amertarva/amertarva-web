@@ -1,0 +1,55 @@
+---
+import { Sun, Moon } from 'lucide-astro'
+---
+
+<button
+  id="theme-toggle"
+  type="button"
+  class="relative flex h-10 w-10 items-center justify-center rounded-full bg-heading/5 hover:bg-heading/10 border border-heading/10 text-body hover:text-heading transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-secondary/50 cursor-pointer overflow-hidden"
+  aria-label="Toggle Theme"
+>
+  <Sun id="icon-sun" class="absolute h-5 w-5 transition-all duration-300 transform scale-100 opacity-100" strokeWidth="2" />
+  <Moon id="icon-moon" class="absolute h-5 w-5 transition-all duration-300 transform scale-0 opacity-0 -rotate-90" strokeWidth="2" />
+</button>
+
+<script>
+  const html = document.documentElement;
+  const btn = document.getElementById('theme-toggle');
+  const iconSun = document.getElementById('icon-sun');
+  const iconMoon = document.getElementById('icon-moon');
+
+  const saved = localStorage.getItem('amertarva-office-theme');
+  const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'amerta-night'
+    : 'amerta-day';
+
+  const apply = (theme: string) => {
+    html.setAttribute('data-theme', theme);
+    localStorage.setItem('amertarva-office-theme', theme);
+    
+    if (theme === 'amerta-night') {
+      iconSun?.classList.replace('scale-100', 'scale-0');
+      iconSun?.classList.replace('opacity-100', 'opacity-0');
+      iconSun?.classList.add('rotate-90');
+      iconMoon?.classList.replace('scale-0', 'scale-100');
+      iconMoon?.classList.replace('opacity-0', 'opacity-100');
+      iconMoon?.classList.replace('-rotate-90', 'rotate-0');
+    } else {
+      iconMoon?.classList.replace('scale-100', 'scale-0');
+      iconMoon?.classList.replace('opacity-100', 'opacity-0');
+      iconMoon?.classList.replace('rotate-0', '-rotate-90');
+      iconSun?.classList.replace('scale-0', 'scale-100');
+      iconSun?.classList.replace('opacity-0', 'opacity-100');
+      iconSun?.classList.remove('rotate-90');
+    }
+  };
+
+  apply(saved ?? preferred);
+  btn?.addEventListener('click', () => {
+    const next =
+      html.getAttribute('data-theme') === 'amerta-night'
+        ? 'amerta-day'
+        : 'amerta-night';
+    apply(next);
+  });
+</script>

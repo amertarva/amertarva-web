@@ -1,0 +1,34 @@
+---
+import '../styles/global.css';
+import Navbar from '../components/home/layouts/navbar.jsx';
+import ChatbotWidget from '../components/chatbot/ChatbotWidget.jsx';
+import HeroSection from '../components/home/hero/HeroSection.jsx';
+import AboutSection from '../components/home/about/AboutSection.jsx';
+import WorkflowSection from '../components/home/workflow/WorkflowSection.jsx';
+import PricingSection from '../components/home/pricing/PricingSection.jsx';
+import CtaSection from '../components/home/cta/CtaSection.jsx';
+import Footer from '../components/home/layouts/Footer.jsx';
+---
+
+<html lang="id" class="scroll-smooth dark">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Amertarva - Platform E-Learning Terverifikasi</title>
+  </head>
+  <body class="antialiased transition-colors duration-500">
+    {/* client:load digunakan agar hook React/Preact (seperti useState & useEffect) berfungsi di browser */}
+    <Navbar client:load />
+    <ChatbotWidget client:load />
+    
+    <main>
+      <HeroSection />
+      <AboutSection />
+      <WorkflowSection client:load />
+      <PricingSection client:load />
+      <CtaSection />
+    </main>
+    <Footer />
+  </body>
+</html>

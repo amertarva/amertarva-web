@@ -1,0 +1,334 @@
+<h2 class="sr-only">
+  Perbandingan harga paket Amertarva E-Learning dengan opsi tahunan dan per
+  semester
+</h2>
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+  .tgl {
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    background: transparent;
+    border: 0.5px solid transparent;
+    color: var(--color-text-secondary);
+    transition: all 0.2s;
+  }
+  .tgl.on {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-secondary);
+    color: var(--color-text-primary);
+  }
+</style>
+
+<div style="padding: 1rem 0">
+  <div style="display: flex; justify-content: center; margin-bottom: 1.5rem">
+    <div
+      style="
+        display: inline-flex;
+        background: var(--color-background-secondary);
+        border: 0.5px solid var(--color-border-tertiary);
+        border-radius: 999px;
+        padding: 3px;
+        gap: 4px;
+      "
+    >
+      <button class="tgl on" id="btn-a" onclick="setMode('annual')">
+        Tahunan
+        <span
+          style="
+            font-size: 10px;
+            background: var(--color-background-success);
+            color: var(--color-text-success);
+            padding: 2px 8px;
+            border-radius: 999px;
+            margin-left: 3px;
+          "
+          >hemat 20%</span
+        >
+      </button>
+      <button class="tgl" id="btn-s" onclick="setMode('semester')">
+        Per semester
+      </button>
+    </div>
+  </div>
+
+  <div
+    id="cards"
+    style="
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+      gap: 10px;
+      margin-bottom: 1.25rem;
+    "
+  ></div>
+
+  <div
+    style="
+      background: var(--color-background-primary);
+      border: 0.5px solid var(--color-border-tertiary);
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      margin-bottom: 1rem;
+    "
+  >
+    <div
+      style="
+        padding: 12px 16px;
+        border-bottom: 0.5px solid var(--color-border-tertiary);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      "
+    >
+      <i
+        class="ti ti-tool"
+        style="font-size: 16px; color: var(--color-text-secondary)"
+        aria-hidden="true"
+      ></i>
+      <div>
+        <p
+          style="
+            font-size: 13px;
+            font-weight: 500;
+            margin: 0;
+            color: var(--color-text-primary);
+          "
+        >
+          Biaya maintenance
+        </p>
+        <p
+          style="font-size: 11px; color: var(--color-text-secondary); margin: 0"
+        >
+          Terpisah dari lisensi — update, bug fix, dan support teknis
+        </p>
+      </div>
+    </div>
+    <table style="width: 100%; border-collapse: collapse">
+      <thead>
+        <tr style="background: var(--color-background-secondary)">
+          <th
+            style="
+              padding: 7px 16px;
+              text-align: left;
+              font-size: 11px;
+              font-weight: 500;
+              color: var(--color-text-secondary);
+              text-transform: uppercase;
+              letter-spacing: 0.04em;
+            "
+          >
+            Paket
+          </th>
+          <th
+            style="
+              padding: 7px 16px;
+              text-align: right;
+              font-size: 11px;
+              font-weight: 500;
+              color: var(--color-text-secondary);
+              text-transform: uppercase;
+              letter-spacing: 0.04em;
+            "
+            id="mh1"
+          >
+            Per tahun
+          </th>
+          <th
+            style="
+              padding: 7px 16px;
+              text-align: right;
+              font-size: 11px;
+              font-weight: 500;
+              color: var(--color-text-secondary);
+              text-transform: uppercase;
+              letter-spacing: 0.04em;
+            "
+          >
+            Per user
+          </th>
+        </tr>
+      </thead>
+      <tbody id="mtable"></tbody>
+    </table>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px">
+    <div
+      style="
+        background: var(--color-background-secondary);
+        border-radius: var(--border-radius-md);
+        padding: 10px 12px;
+        font-size: 11px;
+        color: var(--color-text-secondary);
+        display: flex;
+        gap: 7px;
+        align-items: flex-start;
+      "
+    >
+      <i
+        class="ti ti-info-circle"
+        style="font-size: 13px; flex-shrink: 0; margin-top: 1px"
+        aria-hidden="true"
+      ></i>
+      <span
+        >2 semester = 1 tahun. Harga semester 20% lebih mahal dari prorate —
+        lebih hemat pilih tahunan sekaligus.</span
+      >
+    </div>
+    <div
+      style="
+        background: var(--color-background-secondary);
+        border-radius: var(--border-radius-md);
+        padding: 10px 12px;
+        font-size: 11px;
+        color: var(--color-text-secondary);
+        display: flex;
+        gap: 7px;
+        align-items: flex-start;
+      "
+    >
+      <i
+        class="ti ti-phone"
+        style="font-size: 13px; flex-shrink: 0; margin-top: 1px"
+        aria-hidden="true"
+      ></i>
+      <span
+        >Butuh lebih dari 1.200 user? Hubungi kami untuk paket
+        <strong style="color: var(--color-text-primary)">Enterprise</strong>
+        khusus.</span
+      >
+    </div>
+  </div>
+</div>
+
+<script>
+  const T = [
+    {
+      name: "Classic",
+      dot: "#888780",
+      users: 100,
+      server: "Shared server",
+      db: "5 GB",
+      annual: 4500000,
+      semester: 2700000,
+      maint: { annual: 750000, semester: 450000 },
+      pop: false,
+      feats: [
+        "AI Chatbot NLU & NLP (terbatas)",
+        "E-raport hasil pembelajaran",
+        "Ujian online anti-cheat",
+        "Manajemen kelas",
+      ],
+    },
+    {
+      name: "Pro",
+      dot: "#185FA5",
+      users: 250,
+      server: "Shared server",
+      db: "5 GB",
+      annual: 9000000,
+      semester: 5400000,
+      maint: { annual: 1500000, semester: 900000 },
+      pop: true,
+      feats: [
+        "Semua fitur Classic",
+        "To-do list siswa",
+        "Reminder ujian otomatis",
+      ],
+    },
+    {
+      name: "Premium",
+      dot: "#534AB7",
+      users: 700,
+      server: "Dedicated server",
+      db: "10 GB cloud",
+      annual: 20000000,
+      semester: 12000000,
+      maint: { annual: 3000000, semester: 1800000 },
+      pop: false,
+      feats: [
+        "Semua fitur Pro",
+        "AI expanded (Gemma, Deepseek, Qwen)",
+        "Dedicated server",
+      ],
+    },
+    {
+      name: "Ultra",
+      dot: "#854F0B",
+      users: 1200,
+      server: "Dedicated server",
+      db: "50 GB + NAS pribadi",
+      annual: 40000000,
+      semester: 24000000,
+      maint: { annual: 6000000, semester: 3600000 },
+      pop: false,
+      feats: [
+        "Semua fitur Premium",
+        "+ Claude AI",
+        "Custom domain & landing page",
+      ],
+    },
+  ];
+  const R = (n) => "Rp\u00A0" + new Intl.NumberFormat("id-ID").format(n);
+  let mode = "annual";
+
+  function setMode(m) {
+    mode = m;
+    document.getElementById("btn-a").classList.toggle("on", m === "annual");
+    document.getElementById("btn-s").classList.toggle("on", m === "semester");
+    render();
+  }
+
+  function render() {
+    const period = mode === "annual" ? "tahun" : "semester";
+    const short = mode === "annual" ? "thn" : "smt";
+    document.getElementById("mh1").textContent = "Per " + period;
+
+    document.getElementById("cards").innerHTML = T.map((t) => {
+      const price = mode === "annual" ? t.annual : t.semester;
+      const pu = Math.round(price / t.users);
+      return `<div style="background:var(--color-background-primary);border:${t.pop ? "2px solid var(--color-border-info)" : "0.5px solid var(--color-border-tertiary)"};border-radius:var(--border-radius-lg);padding:1rem 1.1rem;position:relative;">
+      ${t.pop ? `<div style="position:absolute;top:0;left:50%;transform:translate(-50%,-50%);background:var(--color-background-info);color:var(--color-text-info);font-size:10px;font-weight:500;padding:3px 10px;border-radius:999px;white-space:nowrap;">Paling populer</div>` : ""}
+      <div style="font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px;">${t.name}</div>
+      <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:3px;"><i class="ti ti-users" style="font-size:11px;vertical-align:-1px;" aria-hidden="true"></i> hingga ${t.users.toLocaleString("id-ID")} user</div>
+      <div style="font-size:10px;color:var(--color-text-secondary);margin-bottom:10px;"><i class="ti ti-server-2" style="font-size:10px;" aria-hidden="true"></i> ${t.server} · ${t.db}</div>
+      <div style="border-top:0.5px solid var(--color-border-tertiary);margin-bottom:10px;"></div>
+      <div style="font-size:10px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px;">Lisensi</div>
+      <div style="font-size:18px;font-weight:500;color:var(--color-text-primary);line-height:1.2;">${R(price)}</div>
+      <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:6px;">/ ${period}</div>
+      ${mode === "semester" ? `<div style="font-size:10px;color:var(--color-text-success);background:var(--color-background-success);padding:2px 7px;border-radius:999px;display:inline-block;margin-bottom:6px;">Tahunan: ${R(t.annual)}</div>` : ""}
+      <div style="font-size:10px;color:var(--color-text-secondary);background:var(--color-background-secondary);padding:3px 7px;border-radius:var(--border-radius-md);margin-bottom:10px;">≈ ${R(pu)} / user / ${short}</div>
+      <div style="border-top:0.5px solid var(--color-border-tertiary);padding-top:8px;">
+        ${t.feats.map((f) => `<div style="display:flex;gap:5px;align-items:flex-start;font-size:11px;color:var(--color-text-secondary);margin-bottom:4px;line-height:1.4;"><i class="ti ti-check" style="font-size:12px;color:${t.dot};flex-shrink:0;margin-top:1px;" aria-hidden="true"></i>${f}</div>`).join("")}
+      </div>
+    </div>`;
+    }).join("");
+
+    document.getElementById("mtable").innerHTML = T.map((t) => {
+      const mp = mode === "annual" ? t.maint.annual : t.maint.semester;
+      const pu = Math.round(mp / t.users);
+      const pct = Math.round((t.maint.annual / t.annual) * 100);
+      return `<tr style="border-top:0.5px solid var(--color-border-tertiary);">
+      <td style="padding:9px 16px;font-size:12px;color:var(--color-text-primary);">
+        <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${t.dot};margin-right:7px;vertical-align:middle;" aria-hidden="true"></span>
+        ${t.name} <span style="font-size:10px;color:var(--color-text-secondary);">(${pct}% dari lisensi)</span>
+      </td>
+      <td style="padding:9px 16px;text-align:right;font-size:12px;font-weight:500;color:var(--color-text-primary);">${R(mp)} <span style="font-size:10px;font-weight:400;color:var(--color-text-secondary);">/ ${short}</span></td>
+      <td style="padding:9px 16px;text-align:right;font-size:11px;color:var(--color-text-secondary);">${R(pu)}</td>
+    </tr>`;
+    }).join("");
+  }
+  render();
+</script>

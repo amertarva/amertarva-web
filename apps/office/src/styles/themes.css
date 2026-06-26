@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@variant dark (&:where([data-theme="amerta-night"], [data-theme="amerta-night"] *));
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-serif: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --color-base: #f8faf8;
+  --color-secondary: #e9c46a;
+  --color-accent: #789d8e;
+  --color-heading: #2d3436;
+  --color-body: #636e72;
+}
+
+[data-theme="amerta-night"] {
+  --color-base: #1a1f1d;
+  --color-secondary: #f4d35e;
+  --color-accent: #88a99b;
+  --color-heading: #e8edea;
+  --color-body: #a0a8a4;
+}
+
+html {
+  background-color: var(--color-base);
+  color: var(--color-body);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-heading);
+}
+
+p {
+  color: var(--color-body);
+}

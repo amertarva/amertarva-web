@@ -1,0 +1,111 @@
+---
+import { productsHeader, products } from "../../data/products";
+import {
+  Receipt,
+  Fingerprint,
+  PiggyBank,
+  Check,
+  ArrowRight,
+} from "lucide-astro";
+
+const iconMap: Record<string, any> = {
+  receipt: Receipt,
+  fingerprint: Fingerprint,
+  "piggy-bank": PiggyBank,
+};
+---
+
+<section id="products" class="relative py-24 z-10">
+  <div class="mx-auto max-w-7xl px-6 md:px-12">
+    <div class="mb-16 flex flex-col items-center text-center">
+      <span
+        class="inline-block rounded-full border border-secondary/30 bg-secondary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-secondary mb-4"
+      >
+        {productsHeader.label}
+      </span>
+      <h2 class="text-3xl font-bold text-heading md:text-5xl font-serif">
+        {productsHeader.title}
+      </h2>
+      <p class="mt-6 max-w-2xl text-base leading-relaxed text-body md:text-lg">
+        {productsHeader.subtitle}
+      </p>
+    </div>
+
+    <div class="relative flex flex-col gap-8 pb-32 max-w-5xl mx-auto">
+      {
+        products.map((product, index) => {
+          const IconComponent = iconMap[product.icon] || Receipt;
+          return (
+            <div
+              class="group sticky rounded-[2.5rem] border border-heading/10 bg-base p-8 md:p-12 shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] transition-all duration-500 hover:border-secondary/40 overflow-hidden w-full will-change-transform"
+              style={`top: calc(8rem + ${index * 2.5}rem); z-index: ${10 + index};`}
+            >
+              {/* Subtle background gradient on hover */}
+              <div class="absolute inset-0 bg-gradient-to-br from-secondary/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 z-0" />
+
+              <div class="relative z-10 flex flex-col md:flex-row gap-10 h-full items-center">
+                {/* Left Side: Text and Icon */}
+                <div class="flex-1 w-full">
+                  <div class="flex items-center gap-4 mb-6">
+                    <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-secondary/10 text-secondary border border-secondary/20 shadow-inner">
+                      <IconComponent class="h-8 w-8" strokeWidth="1.5" />
+                    </div>
+                    <span
+                      class={`text-xs font-bold uppercase tracking-wider rounded-full px-4 py-1.5 ${
+                        product.status === "available"
+                          ? "border border-secondary/30 bg-secondary/15 text-secondary shadow-[0_0_10px_rgba(233,196,106,0.2)]"
+                          : "border border-body/20 bg-body/10 text-body"
+                      }`}
+                    >
+                      {product.status === "available"
+                        ? "Available"
+                        : "Coming Soon"}
+                    </span>
+                  </div>
+
+                  <span class="mb-3 block text-sm font-semibold uppercase tracking-wider text-body opacity-80">
+                    {product.badge}
+                  </span>
+                  <h3 class="text-3xl md:text-4xl font-bold text-heading mb-4 font-serif">
+                    {product.title}
+                  </h3>
+                  <p class="mb-6 text-base font-medium text-secondary">
+                    {product.tagline}
+                  </p>
+                  <p class="text-base leading-relaxed text-body max-w-lg">
+                    {product.description}
+                  </p>
+                </div>
+
+                {/* Right Side: Features & CTA */}
+                <div class="flex-1 w-full md:border-l md:border-heading/10 md:pl-10 flex flex-col justify-center">
+                  <ul class="space-y-4 mb-10">
+                    {product.features.map((feature) => (
+                      <li class="flex items-start gap-3 text-base text-body">
+                        <Check
+                          class="h-6 w-6 shrink-0 text-secondary mt-0.5"
+                          strokeWidth="2"
+                        />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div>
+                    <a
+                      href={product.href}
+                      class="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-heading text-base font-semibold text-sm transition-all duration-300 hover:scale-105 hover:bg-secondary hover:text-heading shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] dark:shadow-[0_4px_14px_0_rgba(255,255,255,0.05)] w-full sm:w-auto"
+                    >
+                      Learn more
+                      <ArrowRight class="h-5 w-5" strokeWidth="2" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
