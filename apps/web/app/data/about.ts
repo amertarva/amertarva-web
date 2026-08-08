@@ -4,22 +4,22 @@ export const about = {
     '我们是一支精简而专注的技术团队，专注于为成长型企业与教育机构打造高质量的数字产品。从企业官网、电商平台到定制化系统开发，我们坚持用现代化的技术架构与清晰的沟通流程，确保每一个项目都能按时交付、稳定运行。\n\n我们相信好的技术不只是"能用"，而是要为业务真正创造价值——这也是 Amertarva 名字背后的理念。',
   values: [
     {
-      icon: "🎯",
+      icon: "Target",
       title: "专业可靠",
       description: "采用经过验证的技术栈，代码规范、文档完整",
     },
     {
-      icon: "🤝",
+      icon: "Handshake",
       title: "透明沟通",
       description: "项目全程清晰报价、进度同步，无隐藏费用",
     },
     {
-      icon: "⚡",
+      icon: "Zap",
       title: "按时交付",
       description: "明确的开发流程与时间节点，杜绝无限期延期",
     },
     {
-      icon: "🛠️",
+      icon: "Wrench",
       title: "持续支持",
       description: '上线后仍提供维护与更新服务，不是"做完就跑"',
     },

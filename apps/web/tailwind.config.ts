@@ -13,6 +13,7 @@ export default <Config>{
     extend: {
       fontFamily: {
         sans: ["'Plus Jakarta Sans'", "sans-serif"],
+        mono: ["'JetBrains Mono'", "ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"],
       },
       colors: {
         base: "rgb(var(--color-base) / <alpha-value>)",
@@ -20,6 +21,7 @@ export default <Config>{
         accent: "rgb(var(--color-accent) / <alpha-value>)",
         heading: "rgb(var(--color-heading) / <alpha-value>)",
         body: "rgb(var(--color-body) / <alpha-value>)",
+        border: "rgb(var(--color-border) / <alpha-value>)",
         "accent-contrast": "rgb(var(--color-accent-contrast) / <alpha-value>)",
         "secondary-dark": "rgb(var(--color-secondary-dark) / <alpha-value>)",
         "accent-dark": "rgb(var(--color-accent-dark) / <alpha-value>)",

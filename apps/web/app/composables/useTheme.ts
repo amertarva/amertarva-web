@@ -1,7 +1,7 @@
 export type ThemeName = "amerta-day" | "amerta-night";
 
 export const useTheme = () => {
-  const theme = useState<ThemeName>("theme", () => "amerta-day");
+  const theme = useState<ThemeName>("theme", () => "amerta-night");
 
   const applyTheme = (value: ThemeName) => {
     theme.value = value;
@@ -18,10 +18,7 @@ export const useTheme = () => {
   const initTheme = () => {
     if (!import.meta.client) return;
     const saved = localStorage.getItem("amertarva-theme") as ThemeName | null;
-    const preferred = window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "amerta-night"
-      : "amerta-day";
-    applyTheme(saved ?? preferred);
+    applyTheme(saved ?? "amerta-night");
   };
 
   return { theme, applyTheme, toggleTheme, initTheme };

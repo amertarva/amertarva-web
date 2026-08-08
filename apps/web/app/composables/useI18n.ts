@@ -3,7 +3,7 @@ import { translations } from "~/data/translations";
 export type Locale = "id" | "en";
 
 export const useI18n = () => {
-  const locale = useState<Locale>("locale", () => "id");
+  const locale = useState<Locale>("locale", () => "en");
 
   const setLocale = (val: Locale) => {
     locale.value = val;
@@ -19,8 +19,7 @@ export const useI18n = () => {
     if (saved && (saved === "id" || saved === "en")) {
       setLocale(saved);
     } else {
-      const browserLang = navigator.language.split("-")[0];
-      setLocale(browserLang === "id" ? "id" : "en");
+      setLocale("en");
     }
   };
 
@@ -32,8 +31,8 @@ export const useI18n = () => {
       if (current && typeof current === "object" && k in current) {
         current = current[k];
       } else {
-        // Fallback to default (id) or key itself
-        let fallback: any = translations["id"];
+        // Fallback to default (en) or key itself
+        let fallback: any = translations["en"];
         for (const fk of keys) {
           if (fallback && typeof fallback === "object" && fk in fallback) {
             fallback = fallback[fk];

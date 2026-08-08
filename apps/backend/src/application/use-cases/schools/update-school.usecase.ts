@@ -23,6 +23,7 @@ export async function updateSchoolUseCase(
     status,
     maxStorageGb,
     storageAllocation,
+    rentEndDate,
     ...credentialInput
   } = dto;
   const encrypted = encryptCredentials(
@@ -36,6 +37,7 @@ export async function updateSchoolUseCase(
     ...(status !== undefined && { status }),
     ...(maxStorageGb !== undefined && { maxStorageGb }),
     ...(storageAllocation !== undefined && { storageAllocation }),
+    ...(rentEndDate !== undefined && { rentEndDate }),
     ...encrypted,
   });
 

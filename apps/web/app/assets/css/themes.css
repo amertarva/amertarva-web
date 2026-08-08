@@ -2,27 +2,32 @@
 [data-theme="amerta-day"] {
   --color-base: 248 250 248; /* #F8FAF8 */
   --color-secondary: 120 157 142; /* #789D8E */
-  --color-accent: 233 196 106; /* #E9C46A */
+  --color-accent: 120 157 142; /* #789D8E */
   --color-heading: 45 52 54; /* #2D3436 */
   --color-body: 99 110 114; /* #636E72 */
-  --color-accent-contrast: 45 52 54; /* #2D3436 */
+  --color-accent-contrast: 255 255 255;
   --color-secondary-dark: 78 107 95; /* #4E6B5F */
-  --color-accent-dark: 176 139 42; /* #B08B2A */
+  --color-accent-dark: 78 107 95; /* #4E6B5F */
+  --color-border: 220 228 224; /* #DCE4E0 */
 }
 
 [data-theme="amerta-night"] {
   --color-base: 26 31 29; /* #1A1F1D */
   --color-secondary: 136 169 155; /* #88A99B */
-  --color-accent: 244 211 94; /* #F4D35E */
+  --color-accent: 136 169 155; /* #88A99B */
   --color-heading: 232 237 234; /* #E8EDEA */
   --color-body: 160 168 164; /* #A0A8A4 */
-  --color-accent-contrast: 17 20 18; /* #111412 (dark obsidian/black) */
+  --color-accent-contrast: 17 20 18; /* #111412 */
   --color-secondary-dark: 168 201 187; /* #A8C9BB */
-  --color-accent-dark: 244 211 94; /* #F4D35E */
+  --color-accent-dark: 136 169 155; /* #88A99B */
+  --color-border: 42 50 47; /* #2A322F */
 }
 
 html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
   background-color: rgb(var(--color-base));
+  color: rgb(var(--color-body));
   transition:
     background-color 0.25s ease,
     color 0.25s ease;
@@ -40,3 +45,65 @@ h6 {
 p {
   color: rgb(var(--color-body));
 }
+
+/* Agency Tech Background Grid Pattern */
+.bg-grid-pattern {
+  background-size: 32px 32px;
+  background-image: linear-gradient(to right, rgba(120, 120, 120, 0.05) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(120, 120, 120, 0.05) 1px, transparent 1px);
+}
+
+/* Glass Panels */
+.glass-card {
+  background-color: rgba(var(--color-base), 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(var(--color-border), 0.8);
+}
+
+[data-theme="amerta-night"] .glass-card {
+  background-color: rgba(18, 18, 22, 0.65);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="amerta-day"] .glass-card {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Custom Auto-Hiding Scrollbar (Visible on Hover/Approach) */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 9999px;
+  transition: background-color 0.3s ease;
+}
+
+/* Show scrollbar thumb when container or scrollbar is hovered */
+:hover::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(var(--color-body), 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(var(--color-accent));
+}
+
+/* Firefox Support */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+*:hover {
+  scrollbar-color: rgba(var(--color-body), 0.3) transparent;
+}
+
+

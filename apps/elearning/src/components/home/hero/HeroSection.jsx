@@ -1,4 +1,4 @@
-import { ArrowRight, MessageCircle, ShieldCheck, Star, Users } from 'lucide-preact';
+import { MessageCircle, ShieldCheck } from 'lucide-preact';
 
 export default function HeroSection() {
   return (
@@ -36,10 +36,9 @@ export default function HeroSection() {
           <div className="flex flex-col sm:flex-row items-center gap-4 mb-14">
             <a 
               href="#program" 
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-primary hover:bg-primary/90 text-background font-bold transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(120,157,142,0.3)] hover:shadow-[0_0_30px_rgba(120,157,142,0.5)] hover:-translate-y-1"
+              className="w-full sm:w-auto px-8 py-4 rounded-full bg-primary hover:bg-primary/90 text-background font-bold transition-all duration-300 flex items-center justify-center gap-2 hover:-translate-y-1"
             >
               Pelajari Selengkapnya
-              <ArrowRight className="w-5 h-5" />
             </a>
             
             <a 
@@ -51,32 +50,7 @@ export default function HeroSection() {
             </a>
           </div>
 
-          {/* Trust Indicators / Stats */}
-          <div className="flex flex-wrap items-center gap-8 md:gap-16 pt-8 border-t border-heading/10">
-            {/* Reviews */}
-            <div>
-              <div className="flex items-center gap-1 text-secondary mb-2">
-                <Star className="w-5 h-5 fill-current" />
-                <Star className="w-5 h-5 fill-current" />
-                <Star className="w-5 h-5 fill-current" />
-                <Star className="w-5 h-5 fill-current" />
-                <Star className="w-5 h-5 fill-current" />
-              </div>
-              <p className="text-paragraph text-sm"><strong className="text-heading text-base">4.9/5</strong> dari 5.000+ Ulasan</p>
-            </div>
-            
-            {/* Alumni */}
-            <div className="flex items-center gap-4">
-              <div className="p-3 rounded-xl bg-primary/10 border border-primary/20">
-                <Users className="w-6 h-6 text-primary" />
-              </div>
-              <div>
-                <p className="text-heading font-bold text-xl leading-none mb-1">1 Juta+</p>
-                <p className="text-paragraph text-sm">Siswa Terkelola Aktif</p>
-              </div>
-            </div>
-          </div>
-          
+
         </div>
       </div>
       

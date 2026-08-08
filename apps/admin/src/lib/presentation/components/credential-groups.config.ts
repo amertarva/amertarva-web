@@ -2,34 +2,10 @@
 export const CREDENTIAL_GROUPS = [
 	{
 		allocationType: 'Supabase',
-		title: 'Supabase — Teachers',
+		title: 'Supabase Connection',
 		fields: [
-			{ key: 'supaTeachersUrl', label: 'URL' },
-			{ key: 'supaTeachersKey', label: 'Service Role Key' }
-		]
-	},
-	{
-		allocationType: 'Supabase',
-		title: 'Supabase — Students',
-		fields: [
-			{ key: 'supaStudentsUrl', label: 'URL' },
-			{ key: 'supaStudentsKey', label: 'Service Role Key' }
-		]
-	},
-	{
-		allocationType: 'Supabase',
-		title: 'Supabase — Classes',
-		fields: [
-			{ key: 'supaClassesUrl', label: 'URL' },
-			{ key: 'supaClassesKey', label: 'Service Role Key' }
-		]
-	},
-	{
-		allocationType: 'Supabase',
-		title: 'Supabase — Grades',
-		fields: [
-			{ key: 'supaGradesUrl', label: 'URL' },
-			{ key: 'supaGradesKey', label: 'Service Role Key' }
+			{ key: 'supabaseUrl', label: 'URL' },
+			{ key: 'supabaseKey', label: 'Service Role Key' }
 		]
 	},
 	{

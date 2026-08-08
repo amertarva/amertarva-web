@@ -1,6 +1,9 @@
-export type PlanType = "CLASSIC" | "PREMIUM" | "CUSTOM";
+export type PlanType = "CLASSIC" | "PRO" | "PREMIUM" | "CUSTOM";
 export type SchoolStatus = "PENDING" | "ACTIVE" | "SUSPENDED";
 export type InitStatus = "NOT_STARTED" | "IN_PROGRESS" | "DONE" | "FAILED";
+
+// Computed dari rentEndDate — tidak disimpan di DB
+export type RentStatus = "ACTIVE" | "EXPIRING_SOON" | "EXPIRED" | "NONE";
 
 export interface School {
   schoolId: string;
@@ -10,6 +13,11 @@ export interface School {
   status: SchoolStatus;
   maxStorageGb: number;
   storageAllocation: string[];
+
+  // Durasi penyewaan
+  rentDurationMonths: number | null;
+  rentStartDate: string | null;
+  rentEndDate: string | null;
 
   // Semua field di bawah disimpan TERENKRIPSI (AES-256-GCM)
   supaTeachersUrl: string;
@@ -62,3 +70,30 @@ export const CREDENTIAL_FIELDS = [
 ] as const;
 
 export type CredentialField = (typeof CREDENTIAL_FIELDS)[number];
+
+/**
+ * Hitung status sewa berdasarkan rentEndDate.
+ * - NONE         : belum diset
+ * - EXPIRED      : sudah melewati tanggal berakhir
+ * - EXPIRING_SOON: akan habis dalam ≤ 7 hari
+ * - ACTIVE       : masih aktif
+ */
+export function computeRentStatus(rentEndDate: string | null): RentStatus {
+  if (!rentEndDate) return "NONE";
+  const now = Date.now();
+  const end = new Date(rentEndDate).getTime();
+  const diffMs = end - now;
+  if (diffMs <= 0) return "EXPIRED";
+  if (diffMs <= 7 * 24 * 60 * 60 * 1000) return "EXPIRING_SOON";
+  return "ACTIVE";
+}
+
+/**
+ * Tambah bulan ke date — menjaga hari akhir bulan dengan benar.
+ * Contoh: 31 Jan + 1 bulan = 28/29 Feb
+ */
+export function addMonths(date: Date, months: number): Date {
+  const result = new Date(date);
+  result.setMonth(result.getMonth() + months);
+  return result;
+}

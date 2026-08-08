@@ -64,7 +64,7 @@ export default function WorkflowSection() {
                   {/* Circle/Icon */}
                   <div className={`w-14 h-14 shrink-0 rounded-full flex items-center justify-center border-2 transition-all duration-500 bg-background relative z-10 ${
                     activeStep === index 
-                      ? 'border-primary text-primary shadow-[0_0_15px_rgba(120,157,142,0.4)] scale-110' 
+                      ? 'border-primary text-primary scale-110' 
                       : 'border-heading/20 text-heading/40 group-hover:border-primary/50'
                   }`}>
                     {step.icon}
@@ -87,9 +87,7 @@ export default function WorkflowSection() {
           {/* Image Right */}
           <div className="w-full lg:w-1/2">
             <div className="sticky top-32 rounded-[2rem] overflow-hidden aspect-[4/3] bg-heading/5 border border-heading/10 shadow-2xl relative group">
-              {/* Animated Corner Accents */}
-              <div className="absolute top-0 left-0 w-24 h-24 bg-primary/20 blur-2xl z-20"></div>
-              <div className="absolute bottom-0 right-0 w-32 h-32 bg-secondary/20 blur-2xl z-20"></div>
+              {/* Animated Corner Accents removed per ANTISLOP-ID */}
 
               {steps.map((step, index) => (
                 <div 

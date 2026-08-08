@@ -26,8 +26,7 @@ export default defineNuxtConfig({
           innerHTML: `
             (function () {
               var saved = localStorage.getItem('amertarva-theme');
-              var preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'amerta-night' : 'amerta-day';
-              document.documentElement.setAttribute('data-theme', saved || preferred);
+              document.documentElement.setAttribute('data-theme', saved || 'amerta-night');
             })();
           `,
           tagPosition: "head",

@@ -1,46 +1,32 @@
-# Astro Starter Kit: Basics
+# Amertarva E-Learning - Frontend
 
-```sh
-bun create astro@latest -- --template basics
-```
+Dokumentasi ringkas repositori aplikasi E-Learning Amertarva (Frontend).
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 🚀 Spesifikasi Teknologi
+* **Framework Utama:** [Astro v5](https://astro.build/)
+* **UI Library:** [Preact](https://preactjs.com/) (Komponen interaktif/islands)
+* **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
+* **State Management:** [Nanostores](https://github.com/nanostores/nanostores)
 
-## 🚀 Project Structure
+## 📌 Fitur & Halaman Utama
+1. **Landing Page (`index.astro`):**
+   * **Navbar & Footer** (Navigasi & tautan)
+   * **Hero Section** (Pengenalan platform Amertarva)
+   * **About Section** (Penjelasan nilai & visi platform)
+   * **Workflow Section** (Langkah pendaftaran & pembelajaran)
+   * **Pricing Section** (Paket langganan)
+   * **CTA Section** (Ajakan mendaftar)
+2. **Chatbot Widget (`ChatbotWidget.jsx`):**
+   * Widget chatbot interaktif terintegrasi untuk asisten AI.
+3. **Dashboard (Struktur Awal):**
+   * Folder siap pakai untuk modul `student` (siswa) dan `teacher` (pengajar).
 
-Inside of your Astro project, you'll see the following folders and files:
+## ⚙️ Integrasi API & Environment
+* **Proxy Dev:** Request `/api/*` diteruskan ke `http://localhost:3000` secara otomatis pada mode development.
+* **Variabel Lingkungan:** `PUBLIC_BACKEND_URL` untuk URL API backend pada mode production.
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+## 🛠️ Cara Menjalankan
+* `bun install` - Instalasi dependensi
+* `bun dev` - Menjalankan dev server di `localhost:4321`
+* `bun build` - Build production ke folder `./dist/`
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command               | Action                                           |
-| :-------------------- | :----------------------------------------------- |
-| `bun install`         | Installs dependencies                            |
-| `bun dev`             | Starts local dev server at `localhost:4321`      |
-| `bun build`           | Build your production site to `./dist/`          |
-| `bun preview`         | Preview your build locally, before deploying     |
-| `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `bun astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

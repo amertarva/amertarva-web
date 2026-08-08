@@ -1,4 +1,4 @@
-import { Building2, ArrowRight, Shield, Users, LayoutDashboard, Award, Globe } from 'lucide-preact';
+import { Building2, Shield, Users, LayoutDashboard, Award, Globe } from 'lucide-preact';
 
 export default function AboutSection() {
   const waPresentationMsg = "Halo Amertarva, saya tertarik menjadi pionir pendidikan modern dan ingin menjadwalkan presentasi kerja sama kemitraan LMS White-Label.";
@@ -47,7 +47,7 @@ export default function AboutSection() {
           <div className="rounded-[2rem] bg-linear-to-br from-heading/5 to-heading/10 border border-heading/5 p-8 flex flex-col justify-center items-center text-center relative overflow-hidden group hover:border-primary/30 transition-colors shadow-lg">
             <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <Users className="w-10 h-10 text-primary mb-4 group-hover:scale-110 transition-transform" />
-            <h4 className="text-4xl lg:text-5xl font-bold text-heading mb-2">500+</h4>
+            <h4 className="text-4xl lg:text-5xl font-bold text-heading mb-2">[DATA ASLI]</h4>
             <p className="text-paragraph font-medium">Institusi Pendidikan Bermitra</p>
           </div>
 
@@ -89,10 +89,9 @@ export default function AboutSection() {
                 href={waPresentationUrl}
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-primary text-background font-bold hover:bg-primary/90 transition-all duration-300 shadow-[0_0_20px_rgba(120,157,142,0.2)] hover:shadow-[0_0_30px_rgba(120,157,142,0.4)] hover:-translate-y-1"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-primary text-background font-bold hover:bg-primary/90 transition-all duration-300 hover:-translate-y-1"
               >
                 Jadwalkan Presentasi
-                <ArrowRight className="w-5 h-5" />
               </a>
             </div>
             

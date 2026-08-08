@@ -2,16 +2,16 @@
 	export let headers: string[] = [];
 </script>
 
-<div class="overflow-x-auto rounded-xl border border-[#E2EAE6]">
+<div class="overflow-x-auto rounded-2xl border border-primary/10 bg-white shadow-[0_4px_20px_-4px_rgba(120,157,142,0.08)]">
 	<table class="w-full text-sm">
-		<thead class="bg-[#F8FAF8] text-[#7A9590]">
+		<thead class="bg-primary/5 text-heading/70">
 			<tr>
 				{#each headers as h}
-					<th class="px-4 py-2 text-left font-medium">{h}</th>
+					<th class="px-5 py-4 text-left text-xs font-semibold uppercase tracking-wider">{h}</th>
 				{/each}
 			</tr>
 		</thead>
-		<tbody class="divide-y divide-[#E2EAE6]">
+		<tbody class="divide-y divide-primary/5 text-paragraph">
 			<slot />
 		</tbody>
 	</table>

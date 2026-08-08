@@ -4,6 +4,7 @@ import { swagger } from "@elysiajs/swagger";
 import { authRoute } from "./routes/auth.route";
 import { schoolsRoute } from "./routes/schools.route";
 import { chatRoute } from "./routes/chat.route";
+import { sanitizerPlugin } from "./middleware/sanitizer.middleware";
 
 // Memecah string origin yang dipisahkan oleh koma menjadi array
 const allowedOrigins = process.env.CORS_ORIGIN 
@@ -18,8 +19,9 @@ const appUrl =
   `http://localhost:${port}`;
 
 const app = new Elysia()
-  .use(cors({ origin: allowedOrigins }))
+  .use(cors({ origin: allowedOrigins.length > 0 ? allowedOrigins : true }))
   .use(swagger())
+  .use(sanitizerPlugin)
   .use(authRoute)
   .use(schoolsRoute)
   .use(chatRoute)

@@ -87,11 +87,7 @@ function PricingCard({ plan }) {
         ? 'bg-heading/5 border-2 border-primary shadow-2xl scale-100 xl:scale-105 z-10' 
         : 'bg-background border border-heading/10 hover:border-heading/30 shadow-lg hover:shadow-xl'
     }`}>
-      {isPop && (
-        <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-background text-xs font-bold px-5 py-1.5 rounded-full uppercase tracking-wider shadow-lg">
-          Paling Populer
-        </div>
-      )}
+      {/* Badge "Paling Populer" removed per ANTISLOP-ID R-05 */}
       
       {/* Header Info */}
       <div className="mb-6">
@@ -173,7 +169,7 @@ function PricingCard({ plan }) {
         rel="noopener noreferrer"
         className={`mt-8 block w-full py-4 px-6 rounded-full text-center font-bold transition-all duration-300 ${
         isPop 
-          ? 'bg-primary text-background hover:bg-primary/90 shadow-[0_0_20px_rgba(120,157,142,0.3)] hover:shadow-[0_0_30px_rgba(120,157,142,0.5)] hover:-translate-y-1' 
+          ? 'bg-primary text-background hover:bg-primary/90 hover:-translate-y-1' 
           : 'bg-heading/5 text-heading hover:bg-heading/10 border border-heading/10 hover:-translate-y-1'
       }`}>
         {plan.isCustomPrice ? 'Hubungi Kami' : `Pilih ${plan.name}`}

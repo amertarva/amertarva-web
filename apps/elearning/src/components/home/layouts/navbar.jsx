@@ -44,20 +44,11 @@ export default function Navbar() {
       <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
         {/* Logo */}
         <a href="#" className="flex items-center gap-2 group z-50">
-          <div className="relative flex items-center">
-            <span className="text-2xl font-serif tracking-wide text-primary transition-colors">
-              amertar
-            </span>
-            <div className="relative flex flex-col items-center justify-center">
-              <Sun className="w-5 h-5 text-secondary absolute -top-3.5 opacity-90 group-hover:opacity-100 group-hover:rotate-45 transition-all duration-500" />
-              <span className="text-2xl font-serif tracking-wide text-primary transition-colors">
-                v
-              </span>
-            </div>
-            <span className="text-2xl font-serif tracking-wide text-primary transition-colors">
-              a
-            </span>
-          </div>
+          <img
+            src="/assets/Logo_Amertarva.png"
+            alt="Amertarva Logo"
+            className="h-8 md:h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+          />
         </a>
 
         {/* Desktop Navigation */}

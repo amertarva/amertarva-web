@@ -2,69 +2,84 @@
 import { computed } from 'vue'
 import { Cpu, Mail, Github, Linkedin } from 'lucide-vue-next'
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const currentYear = new Date().getFullYear();
 
-const links = computed(() => ({
-  services: [
-    { label: t('footer.links.services.webDev'), href: '#services' },
-    { label: t('footer.links.services.mobileApps'), href: '#services' },
-    { label: t('footer.links.services.uiux'), href: '#services' },
-    { label: t('footer.links.services.devops'), href: '#services' },
-  ],
-  company: [
-    { label: t('footer.links.company.about'), href: '#about' },
-    { label: t('footer.links.company.work'), href: '#' },
-    { label: t('footer.links.company.blog'), href: '#' },
-    { label: t('footer.links.company.contact'), href: '#contact' },
-  ],
-}));
+const serviceLinks = computed(() => {
+  if (locale.value === 'en') {
+    return [
+      { label: 'Landing Page & Corporate', href: '/services/landing-page' },
+      { label: 'E-commerce System', href: '/services/ecommerce' },
+      { label: 'Learning Management System', href: '/services/lms' },
+      { label: 'Custom Web Application', href: '/services/custom-web-app' },
+      { label: 'Mobile Apps (Android & iOS)', href: '/services/custom-mobile-app' },
+      { label: 'Maintenance & Updates', href: '/services/maintenance' },
+    ];
+  }
+  return [
+    { label: 'Landing Page & Perusahaan', href: '/services/landing-page' },
+    { label: 'Sistem Toko E-commerce', href: '/services/ecommerce' },
+    { label: 'Platform E-Learning LMS', href: '/services/lms' },
+    { label: 'Aplikasi Web Kustom', href: '/services/custom-web-app' },
+    { label: 'Aplikasi Mobile (Android & iOS)', href: '/services/custom-mobile-app' },
+    { label: 'Pemeliharaan & Update', href: '/services/maintenance' },
+  ];
+});
+
+const companyLinks = computed(() => [
+  { label: t('footer.links.company.about'), href: '/#about' },
+  { label: t('footer.links.company.work'), href: '/#work' },
+  { label: t('footer.links.company.contact'), href: '/#contact' },
+]);
 </script>
 
 <template>
-  <footer class="border-t border-secondary/15 py-16 lg:py-20 bg-secondary/5">
-    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+  <footer class="border-t border-border py-16 lg:py-20 bg-base">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
         <!-- Brand -->
         <div class="sm:col-span-2 lg:col-span-1">
-          <a href="#" class="flex items-center gap-2.5 mb-4 group">
+          <NuxtLink to="/" class="flex items-center gap-3 mb-4 group">
             <div
-              class="w-8 h-8 rounded-lg bg-accent flex items-center justify-center text-heading font-bold text-sm transition-transform duration-300 group-hover:scale-105"
+              class="w-8 h-8 rounded-lg bg-accent/10 border border-accent/30 flex items-center justify-center text-accent transition-all duration-300 group-hover:bg-accent group-hover:text-accent-contrast"
             >
               <Cpu class="w-4 h-4" />
             </div>
-            <span class="text-heading font-bold text-lg tracking-tight transition-colors duration-200 group-hover:text-accent">
-              Amertarva
-            </span>
-          </a>
-          <p class="text-sm text-body leading-relaxed max-w-xs">
+            <div class="flex flex-col">
+              <span class="text-heading font-extrabold text-base tracking-tight transition-colors duration-200 group-hover:text-accent">
+                AMERTARVA
+              </span>
+              <span class="text-[9px] font-mono tracking-widest text-body/60 uppercase">Tech Agency</span>
+            </div>
+          </NuxtLink>
+          <p class="text-xs sm:text-sm text-body leading-relaxed max-w-xs font-normal">
             {{ t('footer.tagline') }}
           </p>
         </div>
 
         <!-- Services -->
         <div>
-          <h4 class="text-sm font-bold text-heading mb-5">{{ t('footer.columns.services') }}</h4>
-          <ul class="space-y-3">
-            <li v-for="link in links.services" :key="link.label">
-              <a
-                :href="link.href"
-                class="text-sm text-body hover:text-accent transition-colors duration-200"
+          <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-heading mb-5">// {{ t('footer.columns.services') }}</h4>
+          <ul class="space-y-2.5">
+            <li v-for="link in serviceLinks" :key="link.href">
+              <NuxtLink
+                :to="link.href"
+                class="text-xs sm:text-sm text-body hover:text-accent transition-colors duration-200"
               >
                 {{ link.label }}
-              </a>
+              </NuxtLink>
             </li>
           </ul>
         </div>
 
         <!-- Company -->
         <div>
-          <h4 class="text-sm font-bold text-heading mb-5">{{ t('footer.columns.company') }}</h4>
+          <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-heading mb-5">// {{ t('footer.columns.company') }}</h4>
           <ul class="space-y-3">
-            <li v-for="link in links.company" :key="link.label">
+            <li v-for="link in companyLinks" :key="link.label">
               <a
                 :href="link.href"
-                class="text-sm text-body hover:text-accent transition-colors duration-200"
+                class="text-xs sm:text-sm text-body hover:text-accent transition-colors duration-200"
               >
                 {{ link.label }}
               </a>
@@ -74,14 +89,14 @@ const links = computed(() => ({
 
         <!-- Connect -->
         <div>
-          <h4 class="text-sm font-bold text-heading mb-5">{{ t('footer.columns.connect') }}</h4>
+          <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-heading mb-5">// {{ t('footer.columns.connect') }}</h4>
           <ul class="space-y-3.5">
             <li>
               <a
                 href="mailto:hello@amertarva.com"
-                class="inline-flex items-center gap-2 text-sm text-body hover:text-accent transition-colors duration-200"
+                class="inline-flex items-center gap-2 text-xs sm:text-sm text-body hover:text-accent transition-colors duration-200"
               >
-                <Mail class="w-4 h-4" />
+                <Mail class="w-4 h-4 text-accent" />
                 hello@amertarva.com
               </a>
             </li>
@@ -90,9 +105,9 @@ const links = computed(() => ({
                 href="https://github.com/amertarva"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center gap-2 text-sm text-body hover:text-accent transition-colors duration-200"
+                class="inline-flex items-center gap-2 text-xs sm:text-sm text-body hover:text-accent transition-colors duration-200"
               >
-                <Github class="w-4 h-4" />
+                <Github class="w-4 h-4 text-accent" />
                 GitHub
               </a>
             </li>
@@ -101,9 +116,9 @@ const links = computed(() => ({
                 href="https://linkedin.com/company/amertarva"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center gap-2 text-sm text-body hover:text-accent transition-colors duration-200"
+                class="inline-flex items-center gap-2 text-xs sm:text-sm text-body hover:text-accent transition-colors duration-200"
               >
-                <Linkedin class="w-4 h-4" />
+                <Linkedin class="w-4 h-4 text-accent" />
                 LinkedIn
               </a>
             </li>
@@ -111,14 +126,14 @@ const links = computed(() => ({
         </div>
       </div>
 
-      <!-- Bottom -->
-      <div class="border-t border-secondary/15 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p class="text-xs text-body">
+      <!-- Bottom Bar -->
+      <div class="border-t border-border pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-xs text-body font-mono">
           &copy; {{ currentYear }} Amertarva. {{ t('footer.rights') }}
         </p>
+
         <ThemeToggle />
       </div>
     </div>
   </footer>
 </template>
-

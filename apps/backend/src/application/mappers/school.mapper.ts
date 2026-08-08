@@ -1,5 +1,6 @@
 import {
   CREDENTIAL_FIELDS,
+  computeRentStatus,
   type School,
 } from "../../domain/entities/school.entity";
 import type { IEncryptionService } from "../../domain/services/encryption.service";
@@ -11,8 +12,8 @@ export function encryptCredentials(
 ) {
   const result: Record<string, string> = {};
   for (const field of CREDENTIAL_FIELDS) {
-    if (input[field] !== undefined && input[field] !== "") {
-      result[field] = enc.encrypt(input[field]);
+    if (input[field] !== undefined) {
+      result[field] = input[field] !== "" ? enc.encrypt(input[field]) : "";
     }
   }
   return result;
@@ -29,6 +30,12 @@ export function toSchoolSummary(school: School) {
     maxStorageGb: school.maxStorageGb,
     storageAllocation: school.storageAllocation,
     initStatus: school.initStatus,
+    rent: {
+      durationMonths: school.rentDurationMonths,
+      startDate: school.rentStartDate,
+      endDate: school.rentEndDate,
+      status: computeRentStatus(school.rentEndDate),
+    },
     createdAt: school.createdAt,
   };
 }
@@ -47,6 +54,12 @@ export function toSchoolDetail(school: School) {
     initStatus: school.initStatus,
     initError: school.initError,
     superAdminEmail: school.superAdminEmail,
+    rent: {
+      durationMonths: school.rentDurationMonths,
+      startDate: school.rentStartDate,
+      endDate: school.rentEndDate,
+      status: computeRentStatus(school.rentEndDate),
+    },
     createdAt: school.createdAt,
     updatedAt: school.updatedAt,
     credentials: {

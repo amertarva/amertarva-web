@@ -30,14 +30,7 @@ const stepIcons = [
 
 <template>
   <section id="process" class="py-24 lg:py-32 relative overflow-hidden bg-base">
-    <!-- Background glow decoration -->
-    <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <div
-        class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[120px]"
-      />
-    </div>
-
-    <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Section Header -->
       <Motion
         :initial="{ opacity: 0, y: 40 }"
@@ -45,19 +38,15 @@ const stepIcons = [
         :inViewOptions="{ once: true, amount: 0.2 }"
         :transition="{ duration: 0.6, ease: 'easeOut' }"
       >
-        <div class="max-w-2xl mb-20">
-          <span
-            class="text-xs font-semibold tracking-widest uppercase text-accent mb-4 block animate-pulse"
-          >
-            {{ processData.badge }}
-          </span>
+        <div class="max-w-2xl mb-16 lg:mb-20">
+
           <h2
             class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-4 text-heading"
           >
             {{ processData.titleStart }}
             <span class="text-accent">{{ processData.titleHighlight }}</span>
           </h2>
-          <p class="text-lg text-body leading-relaxed">
+          <p class="text-base sm:text-lg text-body leading-relaxed font-normal">
             {{ processData.description }}
           </p>
         </div>
@@ -67,14 +56,14 @@ const stepIcons = [
       <div class="relative max-w-5xl mx-auto px-4 md:px-0 mt-12 md:mt-20">
         <!-- Vertical timeline central line -->
         <div
-          class="absolute left-6 md:left-1/2 transform -translate-x-1/2 top-4 bottom-4 w-[2px] bg-gradient-to-b from-secondary/40 via-secondary/20 to-transparent"
+          class="absolute left-6 md:left-1/2 transform -translate-x-1/2 top-4 bottom-4 w-[1px] bg-border"
         />
 
         <!-- Alternating Timeline Steps -->
         <div
           v-for="(step, idx) in processData.steps"
           :key="step.step"
-          class="relative flex flex-col md:flex-row items-start md:items-center justify-between mb-16 md:mb-20 last:mb-0 group"
+          class="relative flex flex-col md:flex-row items-start md:items-center justify-between mb-12 md:mb-16 last:mb-0 group"
         >
           <!-- Left Side Card (Visible on desktop for EVEN indexes) -->
           <div
@@ -90,19 +79,19 @@ const stepIcons = [
               class="w-full"
             >
               <div
-                class="bg-secondary/5 border border-secondary/10 rounded-2xl p-7 hover:bg-secondary/10 hover:border-secondary/20 hover:shadow-2xl hover:shadow-secondary/5 hover:-translate-y-1.5 transition-all duration-300 w-full text-right"
+                class="bg-base border border-border rounded-xl p-6 sm:p-7 hover:border-accent/40 hover:-translate-y-1 transition-all duration-300 w-full text-right"
               >
                 <div
-                  class="text-xs font-extrabold uppercase tracking-widest text-accent mb-3"
+                  class="text-[11px] font-mono font-bold uppercase tracking-widest text-accent mb-2"
                 >
-                  {{ locale === "id" ? "Langkah" : "Step" }} {{ step.step }}
+                  [ STEP 0{{ step.step }} ]
                 </div>
                 <h3
-                  class="text-xl font-bold text-heading mb-3 group-hover:text-accent transition-colors duration-200"
+                  class="text-lg font-extrabold text-heading mb-2 group-hover:text-accent transition-colors duration-200"
                 >
                   {{ step.title }}
                 </h3>
-                <p class="text-sm text-body leading-relaxed">
+                <p class="text-xs sm:text-sm text-body leading-relaxed font-normal">
                   {{ step.description }}
                 </p>
               </div>
@@ -111,24 +100,24 @@ const stepIcons = [
 
           <!-- Central Timeline Node -->
           <div
-            class="absolute left-6 md:left-1/2 transform -translate-x-1/2 top-4 md:top-auto z-10 w-12 h-12"
+            class="absolute left-6 md:left-1/2 transform -translate-x-1/2 top-4 md:top-auto z-10 w-10 h-10"
           >
             <Motion
               :initial="{ scale: 0, opacity: 0 }"
               :whileInView="{ scale: 1, opacity: 1 }"
               :inViewOptions="{ once: true, amount: 0.5 }"
               :transition="{ duration: 0.5, ease: 'backOut' }"
-              class="w-full h-full rounded-2xl bg-base border-2 border-secondary/20 group-hover:border-accent text-secondary group-hover:text-accent shadow-lg flex items-center justify-center transition-all duration-300 hover:rotate-12"
+              class="w-full h-full rounded-lg bg-base border border-border group-hover:border-accent text-secondary group-hover:text-accent flex items-center justify-center transition-all duration-300"
             >
               <component
                 :is="stepIcons[idx]"
-                class="w-5 h-5 transition-transform duration-300 group-hover:scale-110"
+                class="w-4 h-4 transition-transform duration-300 group-hover:scale-110"
               />
             </Motion>
           </div>
 
           <!-- Right Side Card (Visible on desktop for ODD indexes / Always visible on mobile) -->
-          <div class="w-full md:w-[calc(50%-3rem)] pl-16 md:pl-0 flex justify-start">
+          <div class="w-full md:w-[calc(50%-3rem)] pl-14 md:pl-0 flex justify-start">
             <Motion
               :initial="{ opacity: 0, x: 40 }"
               :whileInView="{ opacity: 1, x: 0 }"
@@ -138,19 +127,19 @@ const stepIcons = [
               :class="idx % 2 !== 0 ? 'block' : 'block md:hidden'"
             >
               <div
-                class="bg-secondary/5 border border-secondary/10 rounded-2xl p-7 hover:bg-secondary/10 hover:border-secondary/20 hover:shadow-2xl hover:shadow-secondary/5 hover:-translate-y-1.5 transition-all duration-300 w-full"
+                class="bg-base border border-border rounded-xl p-6 sm:p-7 hover:border-accent/40 hover:-translate-y-1 transition-all duration-300 w-full"
               >
                 <div
-                  class="text-xs font-extrabold uppercase tracking-widest text-accent mb-3"
+                  class="text-[11px] font-mono font-bold uppercase tracking-widest text-accent mb-2"
                 >
-                  {{ locale === "id" ? "Langkah" : "Step" }} {{ step.step }}
+                  [ STEP 0{{ step.step }} ]
                 </div>
                 <h3
-                  class="text-xl font-bold text-heading mb-3 transition-colors duration-200 group-hover:text-accent"
+                  class="text-lg font-extrabold text-heading mb-2 transition-colors duration-200 group-hover:text-accent"
                 >
                   {{ step.title }}
                 </h3>
-                <p class="text-sm text-body leading-relaxed">
+                <p class="text-xs sm:text-sm text-body leading-relaxed font-normal">
                   {{ step.description }}
                 </p>
               </div>

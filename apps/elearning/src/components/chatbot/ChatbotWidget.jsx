@@ -1,5 +1,6 @@
 import { MessageSquareText, Sparkles, X, ShieldCheck } from 'lucide-preact';
 import { useState, useRef, useEffect } from 'preact/hooks';
+import { sanitizeInput } from '../../utils/sanitizer.js';
 
 export default function ChatbotWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -7,7 +8,7 @@ export default function ChatbotWidget() {
   const [isLoading, setIsLoading] = useState(false);
   const [showWidget, setShowWidget] = useState(false);
   const messagesEndRef = useRef(null);
-  
+
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
@@ -27,7 +28,6 @@ export default function ChatbotWidget() {
     const handleScroll = () => {
       const aboutSection = document.getElementById('tentang-kami');
       // If the section exists, show widget when user scrolls near it. 
-      // If not, default to showing after scrolling down 500px.
       const threshold = aboutSection ? aboutSection.offsetTop - 300 : window.innerHeight * 0.5;
       
       if (window.scrollY > threshold) {
@@ -50,9 +50,9 @@ export default function ChatbotWidget() {
   }, [messages, isOpen]);
 
   const handleSendMessage = async (textOverride = null) => {
-    // Jika dipanggil dari tombol (mendapatkan Event object) atau tanpa argumen, gunakan input.
     // Jika dipanggil dari suggestion dengan string, gunakan string tersebut.
-    const textToSend = typeof textOverride === 'string' ? textOverride : input;
+    const rawText = typeof textOverride === 'string' ? textOverride : input;
+    const textToSend = sanitizeInput(rawText);
     
     if (!textToSend.trim() || isLoading) return;
 
@@ -62,7 +62,8 @@ export default function ChatbotWidget() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:3000/api/chat', {
+      const apiBase = import.meta.env.PUBLIC_BACKEND_URL ?? '';
+      const response = await fetch(`${apiBase}/api/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -78,33 +79,59 @@ export default function ChatbotWidget() {
       const data = await response.json();
       
       if (data.success && data.data) {
-        setMessages(prev => [...prev, { role: 'assistant', content: data.data.content }]);
-        
-        // --- Agentic Orchestration Execution ---
-        if (data.data.action) {
-          setTimeout(() => {
-            if (data.data.action === "SCROLL_PRICING") {
-              const pricingSection = document.getElementById("harga");
-              if (pricingSection) {
-                pricingSection.scrollIntoView({ behavior: 'smooth' });
-              }
-            } else if (data.data.action === "OPEN_WA") {
-              const message = "Halo Amertarva, saya tertarik dan ingin konsultasi serta melihat demo platform LMS Anda.";
-              const whatsappUrl = `https://wa.me/6280000000000?text=${encodeURIComponent(message)}`;
-              window.open(whatsappUrl, "_blank");
-            }
-          }, 600); // Jeda sejenak agar user sempat membaca balasan teksnya
-        }
+        const assistantMsg = {
+          role: 'assistant',
+          content: typeof data.data === 'string' ? data.data : data.data.content,
+          action: typeof data.data === 'object' ? data.data.action : null,
+        };
+        setMessages(prev => [...prev, assistantMsg]);
+        handleActionExecution(assistantMsg.action);
       } else {
         const errorMessage = data.error || "Maaf, terjadi kesalahan pada server. Silakan pastikan server backend berjalan dengan API Key yang valid.";
         setMessages(prev => [...prev, { role: 'assistant', content: errorMessage }]);
       }
     } catch (error) {
       console.error(error);
-      setMessages(prev => [...prev, { role: 'assistant', content: "Maaf, gagal terhubung ke Amerta Agent. Pastikan server backend Anda sudah berjalan di port 3000." }]);
+      const q = textToSend.toLowerCase();
+      let fallbackText = "Maaf, gagal terhubung ke Amerta Agent saat ini.";
+      let fallbackAction = null;
+
+      if (q.includes('ignore previous') || q.includes('system prompt') || q.includes('jailbreak') || q.includes('dan mode') || q.includes('eval(') || q.includes('abaikan instruksi')) {
+        fallbackText = "Maaf, permintaan Anda terdeteksi melanggar kebijakan keamanan sistem Amerta Agent. Saya hanya melayani informasi bisnis seputar layanan Amertarva dan E-Learning.";
+      } else if (['kode', 'coding', 'koding', 'program', 'script', 'skrip', 'tugas', 'soal coding', 'javascript', 'python', 'html', 'css', 'php', 'java', 'sql'].some(kw => q.includes(kw)) && (q.includes('buat') || q.includes('bikin') || q.includes('tulis') || q.includes('jawab') || q.includes('contoh') || q.includes('tugas') || q.includes('pr') || q.includes('soal'))) {
+        fallbackText = "Maaf, Amerta Agent murni bertugas sebagai asisten bisnis & layanan Amertarva, dan tidak dapat menjawab, menyelesaikan, atau membuatkan kode pemrograman. Ada yang ingin Anda tanyakan seputar layanan kami?";
+      } else if (q.includes('harga') || q.includes('biaya') || q.includes('paket') || q.includes('lisensi')) {
+        fallbackText = "Platform Amertarva E-Learning disewakan secara White-Label untuk sekolah dan bimbel dengan pilihan paket fleksibel. Silakan lihat daftar harga di bawah!";
+        fallbackAction = "SCROLL_PRICING";
+      } else if (q.includes('wa') || q.includes('konsultasi') || q.includes('demo') || q.includes('kontak')) {
+        fallbackText = "Anda dapat berkonsultasi gratis dan menguji live demo platform bersama tim engineer kami via WhatsApp.";
+        fallbackAction = "OPEN_WA";
+      } else if (q.includes('elearning') || q.includes('lms') || q.includes('fitur')) {
+        fallbackText = "Amertarva E-Learning mendukung Kelas Virtual, Bank Soal, Sertifikat Digital, dan Dashboard Analytics. Anda dapat membuka portal E-Learning sekarang!";
+        fallbackAction = "OPEN_ELEARNING";
+      }
+      setMessages(prev => [...prev, { role: 'assistant', content: fallbackText, action: fallbackAction }]);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleActionExecution = (action) => {
+    if (!action) return;
+    setTimeout(() => {
+      if (action === "SCROLL_PRICING") {
+        const pricingSection = document.getElementById("harga");
+        if (pricingSection) {
+          pricingSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else if (action === "OPEN_WA") {
+        const message = "Halo Amertarva, saya tertarik dan ingin konsultasi serta melihat demo platform LMS Anda.";
+        const whatsappUrl = `https://wa.me/6280000000000?text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, "_blank");
+      } else if (action === "OPEN_ELEARNING") {
+        window.open("http://localhost:4321", "_blank");
+      }
+    }, 600);
   };
 
   const handleKeyDown = (e) => {
@@ -161,12 +188,41 @@ export default function ChatbotWidget() {
           <div className="flex flex-col gap-4">
             {messages.map((msg, idx) => (
               <div key={idx} className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}>
-                <div className={`p-3.5 rounded-2xl text-sm leading-relaxed shadow-sm max-w-[85%] whitespace-pre-wrap ${
+                <div className={`p-3.5 rounded-2xl text-sm leading-relaxed shadow-sm max-w-[88%] whitespace-pre-wrap flex flex-col gap-2 ${
                   msg.role === 'user' 
-                    ? 'bg-primary text-background rounded-tr-sm' 
-                    : 'bg-background border border-heading/10 text-heading rounded-tl-sm'
+                    ? 'bg-primary text-background rounded-tr-sm font-medium' 
+                    : 'bg-background border border-heading/10 text-heading rounded-tl-sm font-normal'
                 }`}>
-                  {msg.content}
+                  <div>{msg.content}</div>
+
+                  {msg.role === 'assistant' && msg.action === 'OPEN_ELEARNING' && (
+                    <a
+                      href="http://localhost:4321"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-1 pt-2 border-t border-heading/10 flex items-center justify-center gap-2 px-3 py-1.5 rounded-xl bg-primary text-background text-xs font-semibold hover:opacity-90 transition-all cursor-pointer"
+                    >
+                      <span>🎓 Buka E-Learning Platform</span>
+                    </a>
+                  )}
+
+                  {msg.role === 'assistant' && msg.action === 'OPEN_WA' && (
+                    <button
+                      onClick={() => handleActionExecution('OPEN_WA')}
+                      className="mt-1 pt-2 border-t border-heading/10 flex items-center justify-center gap-2 px-3 py-1.5 rounded-xl bg-green-600 text-white text-xs font-semibold hover:bg-green-500 transition-all cursor-pointer"
+                    >
+                      <span>💬 Hubungi via WhatsApp</span>
+                    </button>
+                  )}
+
+                  {msg.role === 'assistant' && (msg.action === 'SCROLL_PRICING' || msg.action === 'SCROLL_SERVICES') && (
+                    <button
+                      onClick={() => handleActionExecution(msg.action)}
+                      className="mt-1 pt-2 border-t border-heading/10 flex items-center justify-center gap-2 px-3 py-1.5 rounded-xl bg-primary/10 text-primary border border-primary/20 text-xs font-semibold hover:bg-primary hover:text-background transition-all cursor-pointer"
+                    >
+                      <span>📋 Lihat Info Harga & Layanan</span>
+                    </button>
+                  )}
                 </div>
               </div>
             ))}

@@ -69,7 +69,8 @@ export interface TranslationSchema {
     };
   };
   portal: {
-    title: string;
+    titleStart: string;
+    titleHighlight: string;
     description: string;
     services: {
       id: string;
@@ -263,7 +264,7 @@ export const translations: Record<string, TranslationSchema> = {
             "Penawaran harga yang jelas dan sinkronisasi kemajuan di seluruh proses proyek tanpa biaya tersembunyi.",
         },
         {
-          title: "Pengiriman Tepat Waktu",
+          title: "Pengerjaan Tepat Waktu",
           description:
             "Proses pengembangan dan target waktu yang jelas untuk menghindari penundaan yang tidak terbatas.",
         },
@@ -279,7 +280,8 @@ export const translations: Record<string, TranslationSchema> = {
       },
     },
     portal: {
-      title: "Layanan yang Kami Sediakan",
+      titleStart: "Layanan yang",
+      titleHighlight: "Kami Sediakan",
       description:
         "Dari pengembangan website hingga pemeliharaan sistem, Amertarva menyediakan solusi digital lengkap untuk bisnis kecil, menengah, dan lembaga pendidikan.",
       services: [
@@ -303,9 +305,15 @@ export const translations: Record<string, TranslationSchema> = {
         },
         {
           id: "custom-web-app",
-          title: "Aplikasi Web Kustom",
+          title: "Pengembangan Web Kustom (Web App)",
           description:
-            "Dikembangkan sesuai kebutuhan spesifik Anda, seperti sistem reservasi, dashboard internal, atau alat verifikasi data.",
+            "Aplikasi web & situs interaktif yang dirancang khusus sesuai kebutuhan — fleksibel untuk keperluan pribadi, operasional bisnis, maupun tugas & proyek akademis.",
+        },
+        {
+          id: "custom-mobile-app",
+          title: "Pengembangan Aplikasi Mobile (Android & iOS)",
+          description:
+            "Aplikasi Android & iOS kustom berkualitas native — siap digunakan untuk keperluan pribadi, sistem bisnis/UMKM, maupun tugas akhir & proyek kuliah.",
         },
         {
           id: "maintenance",
@@ -356,39 +364,39 @@ export const translations: Record<string, TranslationSchema> = {
       titleHighlight: "sesuatu yang luar biasa",
       description:
         "Baik Anda memiliki spesifikasi detail atau baru sekadar ide kasar, kami akan senang mendengarnya dari Anda. Mari cari tahu bagaimana kami bisa mewujudkan visi Anda.",
-      whatsapp: "Chat di WhatsApp",
+      whatsapp: "Konsultasi via WhatsApp",
     },
     ecosystem: {
-      badge: "Ekosistem Produk",
+      badge: "Ekosistem Digital",
       titleStart: "Dua Solusi,",
       titleHighlight: "Satu Ekosistem",
       description:
-        "Platform kami dirancang khusus untuk dua kebutuhan utama — bisnis yang ingin hadir secara digital, dan institusi pendidikan yang siap belajar tanpa batas ruang.",
+        "Arsitektur terpadu yang memisahkan layanan bisnis terintegrasi di web utama dan platform khusus e-learning untuk institusi pendidikan.",
       office: {
-        tag: "Untuk Bisnis",
-        title: "Amertarva Office",
+        tag: "Bisnis & Operasional",
+        title: "Amertarva Business Suite",
         description:
-          "Solusi digital lengkap untuk bisnis dan korporat — dari company profile hingga sistem operasional.",
+          "Solusi digital & operasional bisnis terpadu — dari company profile, custom web app, hingga POS yang langsung dikelola di web utama.",
         features: [
-          "Landing page & company profile",
-          "Website corporate & profil bisnis",
-          "Sistem point of sale (POS)",
-          "Custom web app untuk operasional",
+          "Company profile & website corporate",
+          "Aplikasi web operasional kustom",
+          "Sistem Point of Sale (POS) bisnis",
+          "Terintegrasi penuh tanpa domain terpisah",
         ],
-        cta: "Jelajahi",
+        cta: "Jelajahi Solusi Bisnis",
       },
       learning: {
-        tag: "Untuk Pendidikan",
+        tag: "Spesialis Pendidikan",
         title: "Amertarva Learning",
         description:
-          "Platform e-learning modern untuk institusi pendidikan yang ingin mendigitalisasi proses pembelajaran.",
+          "Platform e-learning terdedikasi untuk sekolah, kampus, dan lembaga pendidikan yang ingin mendigitalisasi pembelajaran.",
         features: [
-          "Manajemen materi & kurikulum",
-          "Kelas virtual & tugas online",
-          "Monitoring progres siswa",
-          "Multi-tenant per institusi",
+          "Manajemen kurikulum & materi digital",
+          "Kelas virtual, tugas online & kuis",
+          "Monitoring progres & analitik siswa",
+          "Multi-tenant terisolasi per institusi",
         ],
-        cta: "Jelajahi",
+        cta: "Kunjungi E-Learning",
       },
     },
     footer: {
@@ -552,7 +560,8 @@ export const translations: Record<string, TranslationSchema> = {
       },
     },
     portal: {
-      title: "Our Services",
+      titleStart: "Our Core",
+      titleHighlight: "Services",
       description:
         "From website development to system maintenance, Amertarva provides complete digital solutions for small-to-medium enterprises and educational institutions.",
       services: [
@@ -578,7 +587,13 @@ export const translations: Record<string, TranslationSchema> = {
           id: "custom-web-app",
           title: "Custom Web Application",
           description:
-            "Developed based on your specific needs, such as booking systems, internal dashboards, or data verification tools.",
+            "Tailored web applications & interactive sites built to exact specifications — ideal for personal use, business operations, or academic projects & assignments.",
+        },
+        {
+          id: "custom-mobile-app",
+          title: "Custom Mobile Application (Android & iOS)",
+          description:
+            "Native-quality Android & iOS mobile applications — built for personal needs, business/SME workflows, or academic coursework & assignments.",
         },
         {
           id: "maintenance",
@@ -629,39 +644,39 @@ export const translations: Record<string, TranslationSchema> = {
       titleHighlight: "something great",
       description:
         "Whether you have a detailed spec or just a rough idea, we'd love to hear from you. Let's explore how we can bring your vision to life.",
-      whatsapp: "Chat on WhatsApp",
+      whatsapp: "Consult via WhatsApp",
     },
     ecosystem: {
-      badge: "Product Ecosystem",
+      badge: "Digital Ecosystem",
       titleStart: "Two Solutions,",
       titleHighlight: "One Ecosystem",
       description:
-        "Our platforms are designed specifically for two key needs — businesses looking to build a digital presence, and educational institutions ready to learn without boundaries.",
+        "A unified architecture dividing integrated corporate services inside the main platform and a dedicated e-learning platform for education.",
       office: {
-        tag: "For Business",
-        title: "Amertarva Office",
+        tag: "Business Suite",
+        title: "Amertarva Business Suite",
         description:
-          "Complete digital solutions for business and corporate — from company profiles to operational systems.",
+          "Complete business digital solutions — from corporate profiles and custom web apps to POS systems built directly into the main platform.",
         features: [
-          "Landing page & company profile",
-          "Corporate website & business profile",
-          "Point of sale (POS) system",
-          "Custom web app for operations",
+          "Company profile & corporate site",
+          "Custom operational web apps",
+          "Business Point of Sale (POS)",
+          "Fully integrated within main site",
         ],
-        cta: "Explore",
+        cta: "Explore Business Suite",
       },
       learning: {
-        tag: "For Education",
+        tag: "Education Specialist",
         title: "Amertarva Learning",
         description:
-          "Modern e-learning platform for educational institutions wanting to digitalize the learning process.",
+          "Dedicated e-learning platform for schools, academies, and educational institutions digitalizing learning workflows.",
         features: [
           "Course & curriculum management",
           "Virtual classrooms & online assignments",
           "Student progress monitoring",
           "Multi-tenant per institution",
         ],
-        cta: "Explore",
+        cta: "Visit E-Learning",
       },
     },
     footer: {

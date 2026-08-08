@@ -2,6 +2,7 @@ import { nanoid } from "nanoid";
 import type { ISchoolRepository } from "../../../domain/repositories/school.repository";
 import type { IEncryptionService } from "../../../domain/services/encryption.service";
 import type { CreateSchoolDto } from "../../dtos/school.dto";
+import { addMonths } from "../../../domain/entities/school.entity";
 import {
   encryptCredentials,
   toSchoolDetail,
@@ -20,6 +21,10 @@ export async function createSchoolUseCase(
 
   const encrypted = encryptCredentials(enc, dto);
 
+  // Hitung tanggal sewa
+  const rentStartDate = new Date();
+  const rentEndDate = addMonths(rentStartDate, dto.rentDurationMonths);
+
   const school = await repo.create({
     schoolId: `SCH_${nanoid(10)}`,
     schoolName: dto.schoolName,
@@ -28,6 +33,9 @@ export async function createSchoolUseCase(
     maxStorageGb: dto.maxStorageGb ?? 5,
     storageAllocation: dto.storageAllocation ?? [],
     status: "PENDING",
+    rentDurationMonths: dto.rentDurationMonths,
+    rentStartDate: rentStartDate.toISOString(),
+    rentEndDate: rentEndDate.toISOString(),
     initStatus: "NOT_STARTED",
     initError: null,
     superAdminEmail: null,
