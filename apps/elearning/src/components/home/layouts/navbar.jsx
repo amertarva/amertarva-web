@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'preact/hooks';
-import { Sun, Moon, Languages, Menu, X } from 'lucide-preact';
+import { Sun, Moon, Menu, X } from 'lucide-preact';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   // Default to dark since we added class="dark" to html initially
   const [theme, setTheme] = useState('dark');
-  const [lang, setLang] = useState('id');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -45,9 +44,9 @@ export default function Navbar() {
         {/* Logo */}
         <a href="#" className="flex items-center gap-2 group z-50">
           <img
-            src="/assets/Logo_Amertarva.png"
+            src="/assets/amertarva.svg"
             alt="Amertarva Logo"
-            className="h-8 md:h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+            className="h-10 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
           />
         </a>
 
@@ -72,15 +71,6 @@ export default function Navbar() {
             aria-label="Toggle Theme"
           >
             {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-          </button>
-          
-          <button
-            onClick={() => setLang(lang === 'id' ? 'en' : 'id')}
-            className="p-2.5 rounded-full bg-heading/5 hover:bg-heading/10 border border-heading/10 text-paragraph hover:text-heading transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary/50 flex items-center justify-center"
-            aria-label="Toggle Language"
-            title="Switch Language"
-          >
-            <Languages className="w-4 h-4" />
           </button>
         </div>
 
@@ -119,14 +109,6 @@ export default function Navbar() {
             className="p-4 rounded-full bg-heading/10 text-heading transition-all hover:bg-heading/20"
           >
             {theme === 'dark' ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
-          </button>
-          
-          <button
-            onClick={() => setLang(lang === 'id' ? 'en' : 'id')}
-            className="p-4 rounded-full bg-heading/10 text-heading transition-all hover:bg-heading/20 flex items-center gap-2"
-          >
-            <Languages className="w-6 h-6" />
-            <span className="font-bold uppercase">{lang}</span>
           </button>
         </div>
       </div>

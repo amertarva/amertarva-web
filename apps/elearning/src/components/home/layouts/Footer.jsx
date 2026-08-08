@@ -1,4 +1,4 @@
-import { Sun, Building2, Globe, Mail, MapPin } from 'lucide-preact';
+import { Globe, Mail, MapPin } from 'lucide-preact';
 
 export default function Footer() {
   return (
@@ -9,14 +9,7 @@ export default function Footer() {
           {/* Logo & About */}
           <div className="md:col-span-5 lg:col-span-4">
             <a href="#" className="flex items-center gap-2 group mb-6 inline-flex">
-              <div className="relative flex items-center">
-                <span className="text-3xl font-serif tracking-wide text-primary transition-colors">amertar</span>
-                <div className="relative flex flex-col items-center justify-center">
-                  <Sun className="w-6 h-6 text-secondary absolute -top-4 opacity-90 group-hover:opacity-100 group-hover:rotate-45 transition-all duration-500" />
-                  <span className="text-3xl font-serif tracking-wide text-primary transition-colors">v</span>
-                </div>
-                <span className="text-3xl font-serif tracking-wide text-primary transition-colors">a</span>
-              </div>
+              <img src="/assets/amertarva.svg" alt="Amertarva Logo" className="h-12 md:h-14 w-auto object-contain" />
             </a>
             <p className="text-paragraph leading-relaxed mb-6">
               Platform B2B White-label LMS terdepan untuk institusi pendidikan yang ingin bertransformasi digital tanpa batas.
@@ -41,24 +34,13 @@ export default function Footer() {
             <h4 className="text-heading font-bold mb-6 uppercase tracking-wider text-sm">Ekosistem Amertarva</h4>
             <ul className="space-y-4">
               <li>
-                <a href="#" className="group flex items-center gap-3 text-paragraph hover:text-primary transition-colors">
+                <a href="https://amertarva.vercel.app" className="group flex items-center gap-3 text-paragraph hover:text-primary transition-colors">
                   <div className="w-10 h-10 rounded-xl bg-heading/5 flex items-center justify-center border border-heading/10 group-hover:bg-primary/10 group-hover:border-primary/20 transition-all">
                     <Globe className="w-5 h-5" />
                   </div>
                   <div>
                     <span className="block font-bold text-heading group-hover:text-primary transition-colors">Amertarva Main Web</span>
                     <span className="text-xs opacity-70">Portal Publik & Utama</span>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="#" className="group flex items-center gap-3 text-paragraph hover:text-secondary transition-colors">
-                  <div className="w-10 h-10 rounded-xl bg-heading/5 flex items-center justify-center border border-heading/10 group-hover:bg-secondary/10 group-hover:border-secondary/20 transition-all">
-                    <Building2 className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <span className="block font-bold text-heading group-hover:text-secondary transition-colors">Amertarva Office</span>
-                    <span className="text-xs opacity-70">Operasional Internal Amertarva</span>
                   </div>
                 </a>
               </li>
@@ -80,7 +62,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-heading/10 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-paragraph font-medium">
-            &copy; {new Date().getFullYear()} PT Amertarva Digital Edukasi. Hak cipta dilindungi.
+            &copy; {new Date().getFullYear()} PT Amerta Digital Creativindo. Hak cipta dilindungi.
           </p>
           <div className="flex items-center gap-6 text-sm text-paragraph font-medium">
             <a href="#" className="hover:text-heading transition-colors">Kebijakan Privasi</a>

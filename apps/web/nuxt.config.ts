@@ -7,6 +7,9 @@ export default defineNuxtConfig({
   },
   modules: ["@nuxtjs/tailwindcss", "motion-v/nuxt"],
   css: ["~/assets/css/themes.css"],
+  nitro: {
+    preset: 'vercel'
+  },
   app: {
     head: {
       link: [

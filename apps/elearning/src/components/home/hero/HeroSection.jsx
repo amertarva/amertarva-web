@@ -1,6 +1,9 @@
 import { MessageCircle, ShieldCheck } from 'lucide-preact';
 
 export default function HeroSection() {
+  const waContactMsg = "Halo Amertarva, saya tertarik dan ingin berkonsultasi mengenai penyewaan platform LMS White-label untuk institusi saya.";
+  const waContactUrl = `https://wa.me/6280000000000?text=${encodeURIComponent(waContactMsg)}`;
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
       {/* Background Image with Gradient Overlay */}
@@ -42,7 +45,9 @@ export default function HeroSection() {
             </a>
             
             <a 
-              href="#konsultasi" 
+              href={waContactUrl} 
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-full sm:w-auto px-8 py-4 rounded-full bg-heading/5 hover:bg-heading/10 border border-heading/10 text-heading font-semibold transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-md hover:-translate-y-1"
             >
               Konsultasi Gratis
