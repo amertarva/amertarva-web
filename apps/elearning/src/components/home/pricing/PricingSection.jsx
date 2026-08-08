@@ -189,7 +189,7 @@ export default function PricingSection() {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-5xl font-bold text-heading mb-6 font-serif leading-tight">
             Investasi Terukur untuk <br className="hidden md:block"/>
-            <span className="text-transparent bg-clip-text bg-linear-to-r from-primary to-secondary">Skala Digital Anda</span>
+            <span className="text-primary">Skala Digital Anda</span>
           </h2>
           <p className="text-lg text-paragraph leading-relaxed">
             Pilih paket lisensi tahunan LMS White-label yang sesuai dengan kapasitas siswa dan kebutuhan operasional institusi pendidikan Anda.

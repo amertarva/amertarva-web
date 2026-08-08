@@ -12,7 +12,7 @@ export default function AboutSection() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-5xl font-bold text-heading mb-6 font-serif leading-tight">
-            Standar Baru <span className="text-transparent bg-clip-text bg-linear-to-r from-primary to-secondary">Pendidikan Digital</span> Masa Depan
+            Standar Baru <span className="text-primary">Pendidikan Digital</span> Masa Depan
           </h2>
           <p className="text-lg text-paragraph leading-relaxed">
             Lebih dari sekadar platform e-learning, Amertarva adalah ekosistem komprehensif yang dirancang khusus untuk membantu institusi pendidikan bertransformasi dan mencetak lulusan berdaya saing global.
