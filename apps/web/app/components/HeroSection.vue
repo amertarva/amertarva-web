@@ -70,15 +70,15 @@ const { t } = useI18n();
         >
           <div class="grid grid-cols-3 gap-4 pt-8 border-t border-border/80 max-w-2xl">
             <div class="pr-4 border-r border-border/80">
-              <div class="text-2xl sm:text-3xl font-mono font-extrabold text-heading">[DATA ASLI]</div>
+              <div class="text-2xl sm:text-3xl font-mono font-extrabold text-heading">100+</div>
               <div class="text-xs text-body font-medium uppercase tracking-wider mt-1">{{ t('hero.stats.projects') }}</div>
             </div>
             <div class="px-2 pr-4 border-r border-border/80">
-              <div class="text-2xl sm:text-3xl font-mono font-extrabold text-heading">[DATA ASLI]</div>
+              <div class="text-2xl sm:text-3xl font-mono font-extrabold text-heading">10+</div>
               <div class="text-xs text-body font-medium uppercase tracking-wider mt-1">{{ t('hero.stats.clients') }}</div>
             </div>
             <div class="pl-2">
-              <div class="text-2xl sm:text-3xl font-mono font-extrabold text-accent">[DATA ASLI]</div>
+              <div class="text-2xl sm:text-3xl font-mono font-extrabold text-accent">5+</div>
               <div class="text-xs text-body font-medium uppercase tracking-wider mt-1">{{ t('hero.stats.experience') }}</div>
             </div>
           </div>

@@ -33,7 +33,6 @@ const serviceUseCases = computed(() => {
   ];
 });
 
-const detailText = computed(() => locale.value === 'en' ? 'View Details' : 'Lihat Detail Layanan');
 const waConsultText = computed(() => locale.value === 'en' ? 'Consult via WA' : 'Konsultasi WA');
 
 const getWaLink = (title: string) => {
@@ -92,24 +91,13 @@ const getWaLink = (title: string) => {
                   </span>
                 </div>
 
-                <NuxtLink :to="`/services/${service.id}`" class="block group/title">
-                  <h3 class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-heading mb-3 group-hover/title:text-accent transition-colors duration-200 leading-snug">
-                    {{ service.title }}
-                  </h3>
-                </NuxtLink>
+                <h3 class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-heading mb-3 leading-snug">
+                  {{ service.title }}
+                </h3>
 
-                <p class="text-sm sm:text-base text-body leading-relaxed font-normal max-w-xl mb-6">
+                <p class="text-sm sm:text-base text-body leading-relaxed font-normal max-w-xl">
                   {{ service.description }}
                 </p>
-
-                <!-- Quick Detail Link Badge -->
-                <NuxtLink
-                  :to="`/services/${service.id}`"
-                  class="inline-flex items-center gap-2 text-xs font-mono font-semibold text-accent hover:underline group/link"
-                >
-                  <span>{{ detailText }}</span>
-                  <ArrowRight class="w-3.5 h-3.5 transition-transform group-hover/link:translate-x-1" />
-                </NuxtLink>
               </div>
 
               <!-- Right Side: Target Use Cases & Action Buttons -->
@@ -132,22 +120,15 @@ const getWaLink = (title: string) => {
 
                 <!-- Action Button Group -->
                 <div class="flex flex-col gap-2.5 w-full">
-                  <NuxtLink
-                    :to="`/services/${service.id}`"
-                    class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-accent text-accent-contrast hover:bg-accent/90 text-xs font-semibold tracking-wide transition-all duration-300 group/btn w-full shadow-md"
-                  >
-                    <span>{{ detailText }}</span>
-                    <ArrowRight class="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
-                  </NuxtLink>
-
                   <a
                     :href="getWaLink(service.title)"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl border border-border/80 bg-base/80 hover:bg-secondary/10 hover:border-accent/40 text-heading text-xs font-semibold tracking-wide transition-all duration-300 w-full"
+                    class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-accent text-accent-contrast hover:bg-accent/90 text-xs font-semibold tracking-wide transition-all duration-300 w-full shadow-md group/btn"
                   >
-                    <MessageSquare class="w-3.5 h-3.5 text-accent" />
+                    <MessageSquare class="w-4 h-4" />
                     <span>{{ waConsultText }}</span>
+                    <ArrowRight class="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
                   </a>
                 </div>
               </div>

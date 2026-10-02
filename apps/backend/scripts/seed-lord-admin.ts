@@ -12,7 +12,10 @@ if (!email || !password) {
   process.exit(1);
 }
 
-const hashed = await Bun.password.hash(password);
+const hashed = await Bun.password.hash(password, {
+  algorithm: "bcrypt",
+  cost: 10,
+});
 
 const { error } = await supabase
   .from("lord_admins")

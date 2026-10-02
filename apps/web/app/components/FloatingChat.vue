@@ -4,6 +4,11 @@ import { MessageSquareText, Sparkles, X, ShieldCheck, GraduationCap, ExternalLin
 import { sanitizeInput } from '~/utils/sanitizer'
 
 const { locale } = useI18n();
+const config = useRuntimeConfig();
+
+const apiUrl = computed(() => (config.public.apiUrl as string) || 'http://localhost:3000');
+const elearningUrl = computed(() => (config.public.elearningUrl as string) || 'http://localhost:4321');
+const whatsappPhone = computed(() => (config.public.whatsappPhone as string) || '6281234567890');
 
 const isOpen = ref(false);
 const showWidget = ref(false);
@@ -86,10 +91,10 @@ const handleActionExecution = (action?: string | null) => {
       const message = locale.value === 'en'
         ? 'Hello Amertarva, I would like to consult about web & system development.'
         : 'Halo Amertarva, saya tertarik dan ingin konsultasi serta melihat demo sistem digital Anda.';
-      const whatsappUrl = `https://wa.me/6281234567890?text=${encodeURIComponent(message)}`;
+      const whatsappUrl = `https://wa.me/${whatsappPhone.value}?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');
     } else if (action === 'OPEN_ELEARNING') {
-      window.open('http://localhost:4321', '_blank');
+      window.open(elearningUrl.value, '_blank');
     }
   }, 600);
 };
@@ -203,7 +208,7 @@ const handleSendMessage = async (textOverride?: string) => {
   ];
 
   try {
-    const response = await fetch('http://localhost:3000/api/chat', {
+    const response = await fetch(`${apiUrl.value}/api/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ messages: apiPayload }),
@@ -329,7 +334,7 @@ const handleSuggestionClick = (query: string) => {
               <div v-if="msg.role === 'assistant' && msg.action" class="mt-1 pt-2 border-t border-border/40 flex flex-col gap-1.5">
                 <a
                   v-if="msg.action === 'OPEN_ELEARNING'"
-                  href="http://localhost:4321"
+                  :href="elearningUrl"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="inline-flex items-center justify-center gap-2 px-3.5 py-2 rounded-xl bg-accent text-accent-contrast font-semibold text-xs shadow-sm hover:opacity-90 transition-all hover:scale-[1.02] cursor-pointer"

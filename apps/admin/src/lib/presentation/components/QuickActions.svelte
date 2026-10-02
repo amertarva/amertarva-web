@@ -1,62 +1,57 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import Card from '../shared/Card.svelte';
+	import { PlusCircle, Globe, ChevronRight } from '@lucide/svelte';
 </script>
 
-<div class="space-y-4">
-	<h2 class="text-lg font-bold text-heading">Pintasan Cepat</h2>
-	<Card class="p-6 space-y-4">
-		<div class="flex items-start gap-4">
+<div class="space-y-3.5">
+	<h2 class="text-base font-bold text-heading">Aksi & Panduan Admin</h2>
+	<Card class="p-5 space-y-4">
+		<!-- Action 1 -->
+		<div class="flex items-start gap-3.5">
 			<div
-				class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-secondary/15 text-heading"
+				class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary border border-primary/20"
 			>
-				<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-					/>
-				</svg>
+				<PlusCircle class="h-4 w-4" />
 			</div>
 			<div>
-				<h4 class="font-semibold text-heading text-sm">Registrasi Sekolah Baru</h4>
-				<p class="text-xs text-paragraph mt-1">
-					Daftarkan sekolah baru dan persiapkan alokasi databasenya.
+				<h4 class="font-bold text-heading text-sm">Registrasi Tenant Baru</h4>
+				<p class="text-xs text-paragraph mt-0.5 leading-relaxed">
+					Daftarkan sekolah baru, tentukan durasi sewa, dan alokasikan basis data.
 				</p>
 				<button
+					type="button"
 					on:click={() => goto('/schools/new')}
-					class="mt-2 text-xs font-bold text-primary hover:underline"
-					>Mulai Pendaftaran →</button
+					class="mt-2 inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline cursor-pointer"
 				>
+					<span>Buka Form Pendaftaran</span>
+					<ChevronRight class="h-3 w-3" />
+				</button>
 			</div>
 		</div>
 
-		<hr class="border-primary/10" />
+		<hr class="border-primary/15" />
 
-		<div class="flex items-start gap-4">
+		<!-- Action 2 -->
+		<div class="flex items-start gap-3.5">
 			<div
-				class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary"
+				class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-secondary/20 text-heading border border-secondary/30"
 			>
-				<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2m0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-					/>
-				</svg>
+				<Globe class="h-4 w-4 text-heading/80" />
 			</div>
 			<div>
-				<h4 class="font-semibold text-heading text-sm">Monitoring Database</h4>
-				<p class="text-xs text-paragraph mt-1">
-					Cek koneksi dan status inisialisasi tenant secara berkala.
+				<h4 class="font-bold text-heading text-sm">Kelola Domain & Kill-Switch</h4>
+				<p class="text-xs text-paragraph mt-0.5 leading-relaxed">
+					Atur custom domain DNS institusi atau aktifkan penangguhan web sekolah.
 				</p>
 				<button
+					type="button"
 					on:click={() => goto('/schools')}
-					class="mt-2 text-xs font-bold text-primary hover:underline"
-					>Monitor Status →</button
+					class="mt-2 inline-flex items-center gap-1 text-xs font-bold text-primary hover:underline cursor-pointer"
 				>
+					<span>Lihat Daftar Tenant</span>
+					<ChevronRight class="h-3 w-3" />
+				</button>
 			</div>
 		</div>
 	</Card>

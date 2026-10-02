@@ -3,6 +3,9 @@ import { useState, useRef, useEffect } from 'preact/hooks';
 import { sanitizeInput } from '../../utils/sanitizer.js';
 
 export default function ChatbotWidget() {
+  const elearningUrl = import.meta.env.PUBLIC_ELEARNING_URL || (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:4321');
+  const whatsappPhone = import.meta.env.PUBLIC_WHATSAPP_PHONE || '6280000000000';
+
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -126,10 +129,10 @@ export default function ChatbotWidget() {
         }
       } else if (action === "OPEN_WA") {
         const message = "Halo Amertarva, saya tertarik dan ingin konsultasi serta melihat demo platform LMS Anda.";
-        const whatsappUrl = `https://wa.me/6280000000000?text=${encodeURIComponent(message)}`;
+        const whatsappUrl = `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(message)}`;
         window.open(whatsappUrl, "_blank");
       } else if (action === "OPEN_ELEARNING") {
-        window.open("http://localhost:4321", "_blank");
+        window.open(elearningUrl, "_blank");
       }
     }, 600);
   };
@@ -197,7 +200,7 @@ export default function ChatbotWidget() {
 
                   {msg.role === 'assistant' && msg.action === 'OPEN_ELEARNING' && (
                     <a
-                      href="http://localhost:4321"
+                      href={elearningUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="mt-1 pt-2 border-t border-heading/10 flex items-center justify-center gap-2 px-3 py-1.5 rounded-xl bg-primary text-background text-xs font-semibold hover:opacity-90 transition-all cursor-pointer"

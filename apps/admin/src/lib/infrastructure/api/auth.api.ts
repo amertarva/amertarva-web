@@ -15,3 +15,26 @@ export function refreshApi(refreshToken: string) {
 		body: JSON.stringify({ refreshToken })
 	});
 }
+
+// Get Current Admin
+export function getMeApi() {
+	return apiFetch('/auth/me', {
+		method: 'GET'
+	});
+}
+
+// Update Profile (Name & Email)
+export function updateProfileApi(data: { name?: string; email?: string }) {
+	return apiFetch('/auth/profile', {
+		method: 'PATCH',
+		body: JSON.stringify(data)
+	});
+}
+
+// Update Password
+export function updatePasswordApi(data: { currentPassword: string; newPassword: string }) {
+	return apiFetch('/auth/password', {
+		method: 'PATCH',
+		body: JSON.stringify(data)
+	});
+}

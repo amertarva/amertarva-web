@@ -1,9 +1,12 @@
 {
   "name": "backend",
   "version": "1.0.50",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "bun run --watch src/presentation/index.ts"
+    "dev": "bun run --watch src/presentation/index.ts",
+    "build": "bun build ./src/presentation/index.ts --outfile ./dist/index.js --target bun",
+    "vercel-build": "bun run build",
+    "reset-admin": "bun run scripts/reset-lord-admin.ts"
   },
   "dependencies": {
     "@elysiajs/cors": "^1.4.2",
@@ -13,7 +16,9 @@
     "elysia": "^1.4.28"
   },
   "devDependencies": {
+    "@types/node": "^22",
     "bun-types": "latest"
   },
-  "module": "src/index.js"
+  "module": "src/index.ts"
 }
+

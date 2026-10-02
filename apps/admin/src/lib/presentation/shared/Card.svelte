@@ -3,6 +3,6 @@
 	export { className as class };
 </script>
 
-<div class="rounded-2xl border border-primary/10 bg-white shadow-[0_4px_20px_-4px_rgba(120,157,142,0.08)] transition-all duration-200 {className}">
+<div class="rounded-xl border border-primary/20 bg-white shadow-[0_1px_3px_rgba(45,52,54,0.05),0_10px_25px_-5px_rgba(120,157,142,0.06)] transition-all duration-200 {className}">
 	<slot />
 </div>

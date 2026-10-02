@@ -1,18 +1,71 @@
 <script lang="ts">
+	import { onMount, onDestroy } from 'svelte';
 	import { authStore } from '$lib/application/stores/auth.store';
-	import { logout } from '$lib/application/use-cases/auth.usecase';
+	import {
+		logout,
+		recordUserActivity,
+		checkSessionInactivity
+	} from '$lib/application/use-cases/auth.usecase';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
+	import {
+		LayoutDashboard,
+		Building2,
+		PlusCircle,
+		Settings,
+		LogOut,
+		ChevronLeft,
+		ChevronRight
+	} from '@lucide/svelte';
 
 	let { children } = $props();
 	let sidebarCollapsed = $state(false);
+	let checkInterval: ReturnType<typeof setInterval>;
 
 	// Guard auth — redirect ke /login kalau tidak punya token
 	$effect(() => {
 		if ($authStore.accessToken === null && $page.url.pathname !== '/login') {
 			goto('/login');
+		}
+	});
+
+	function handleActivity() {
+		if ($authStore.accessToken) {
+			recordUserActivity();
+		}
+	}
+
+	function verifySession() {
+		if ($authStore.accessToken && $page.url.pathname !== '/login') {
+			const isExpired = checkSessionInactivity();
+			if (isExpired) {
+				goto('/login?reason=session_expired');
+			}
+		}
+	}
+
+	onMount(() => {
+		if (typeof window !== 'undefined') {
+			// Periksa sesi saat halaman dimuat
+			verifySession();
+
+			const events = ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'];
+			events.forEach((evt) => window.addEventListener(evt, handleActivity, { passive: true }));
+			document.addEventListener('visibilitychange', verifySession);
+
+			// Interval pengecekan berkala setiap 15 detik
+			checkInterval = setInterval(verifySession, 15_000);
+		}
+	});
+
+	onDestroy(() => {
+		if (typeof window !== 'undefined') {
+			const events = ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'];
+			events.forEach((evt) => window.removeEventListener(evt, handleActivity));
+			document.removeEventListener('visibilitychange', verifySession);
+			if (checkInterval) clearInterval(checkInterval);
 		}
 	});
 
@@ -33,59 +86,47 @@
 	<div class="flex min-h-screen bg-amerta-bg text-paragraph">
 		<!-- Sidebar -->
 		<aside
-			class="fixed inset-y-0 left-0 z-20 flex flex-col border-r border-primary/10 bg-white transition-all duration-300 {sidebarCollapsed
+			class="fixed inset-y-0 left-0 z-20 flex flex-col border-r border-primary/20 bg-white transition-all duration-200 {sidebarCollapsed
 				? 'w-20'
 				: 'w-64'}"
 		>
 			<!-- Logo Section -->
 			<div
-				class="flex h-16 items-center border-b border-primary/10 transition-all duration-300 {sidebarCollapsed
+				class="flex h-16 items-center border-b border-primary/15 transition-all duration-200 {sidebarCollapsed
 					? 'justify-center px-4'
 					: 'gap-3 px-6'}"
 			>
 				<div
-					class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-white font-bold text-lg shadow-md shadow-primary/20"
+					class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary text-white font-bold text-base shadow-xs"
 				>
 					A
 				</div>
 				{#if !sidebarCollapsed}
 					<div class="overflow-hidden">
-						<h1 class="font-bold tracking-tight text-heading text-base leading-none truncate">
+						<h1 class="font-bold tracking-tight text-heading text-base leading-tight truncate">
 							Amertarva
 						</h1>
 						<span
-							class="text-[10px] font-semibold uppercase tracking-wider text-primary truncate block mt-0.5"
-							>Master Admin</span
+							class="text-[10px] font-bold uppercase tracking-wider text-primary truncate block"
+							>Lord Platform</span
 						>
 					</div>
 				{/if}
 			</div>
 
 			<!-- Navigation -->
-			<nav class="flex-1 space-y-1.5 px-4 py-6 transition-all duration-300">
+			<nav class="flex-1 space-y-1 px-3 py-5 transition-all duration-200">
 				<a
 					href="/"
 					title={sidebarCollapsed ? 'Dashboard Overview' : ''}
-					class="flex items-center rounded-xl py-3 text-sm font-medium transition-all duration-200 {$page
+					class="flex items-center rounded-lg py-2.5 text-sm font-medium transition-all duration-150 {$page
 						.url.pathname === '/'
-						? 'bg-primary text-white shadow-sm shadow-primary/15'
-						: 'text-paragraph hover:bg-primary/5 hover:text-primary'} {sidebarCollapsed
+						? 'bg-primary text-white shadow-xs font-semibold'
+						: 'text-paragraph hover:bg-primary/10 hover:text-heading'} {sidebarCollapsed
 						? 'justify-center px-0'
-						: 'gap-3.5 px-4'}"
+						: 'gap-3 px-3.5'}"
 				>
-					<svg
-						class="h-5 w-5 shrink-0"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z"
-						/>
-					</svg>
+					<LayoutDashboard class="h-5 w-5 shrink-0" />
 					{#if !sidebarCollapsed}
 						<span class="truncate">Dashboard Overview</span>
 					{/if}
@@ -94,26 +135,14 @@
 				<a
 					href="/schools"
 					title={sidebarCollapsed ? 'Kelola Sekolah' : ''}
-					class="flex items-center rounded-xl py-3 text-sm font-medium transition-all duration-200 {$page
+					class="flex items-center rounded-lg py-2.5 text-sm font-medium transition-all duration-150 {$page
 						.url.pathname.startsWith('/schools') && $page.url.pathname !== '/schools/new'
-						? 'bg-primary text-white shadow-sm shadow-primary/15'
-						: 'text-paragraph hover:bg-primary/5 hover:text-primary'} {sidebarCollapsed
+						? 'bg-primary text-white shadow-xs font-semibold'
+						: 'text-paragraph hover:bg-primary/10 hover:text-heading'} {sidebarCollapsed
 						? 'justify-center px-0'
-						: 'gap-3.5 px-4'}"
+						: 'gap-3 px-3.5'}"
 				>
-					<svg
-						class="h-5 w-5 shrink-0"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-						/>
-					</svg>
+					<Building2 class="h-5 w-5 shrink-0" />
 					{#if !sidebarCollapsed}
 						<span class="truncate">Kelola Sekolah</span>
 					{/if}
@@ -122,48 +151,54 @@
 				<a
 					href="/schools/new"
 					title={sidebarCollapsed ? 'Tambah Sekolah' : ''}
-					class="flex items-center rounded-xl py-3 text-sm font-medium transition-all duration-200 {$page
+					class="flex items-center rounded-lg py-2.5 text-sm font-medium transition-all duration-150 {$page
 						.url.pathname === '/schools/new'
-						? 'bg-primary text-white shadow-sm shadow-primary/15'
-						: 'text-paragraph hover:bg-primary/5 hover:text-primary'} {sidebarCollapsed
+						? 'bg-primary text-white shadow-xs font-semibold'
+						: 'text-paragraph hover:bg-primary/10 hover:text-heading'} {sidebarCollapsed
 						? 'justify-center px-0'
-						: 'gap-3.5 px-4'}"
+						: 'gap-3 px-3.5'}"
 				>
-					<svg
-						class="h-5 w-5 shrink-0"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-						/>
-					</svg>
+					<PlusCircle class="h-5 w-5 shrink-0" />
 					{#if !sidebarCollapsed}
 						<span class="truncate">Tambah Sekolah</span>
+					{/if}
+				</a>
+
+				<a
+					href="/settings"
+					title={sidebarCollapsed ? 'Pengaturan Akun' : ''}
+					class="flex items-center rounded-lg py-2.5 text-sm font-medium transition-all duration-150 {$page
+						.url.pathname === '/settings'
+						? 'bg-primary text-white shadow-xs font-semibold'
+						: 'text-paragraph hover:bg-primary/10 hover:text-heading'} {sidebarCollapsed
+						? 'justify-center px-0'
+						: 'gap-3 px-3.5'}"
+				>
+					<Settings class="h-5 w-5 shrink-0" />
+					{#if !sidebarCollapsed}
+						<span class="truncate">Pengaturan Akun</span>
 					{/if}
 				</a>
 			</nav>
 
 			<!-- User Profile & Logout -->
-			<div class="mt-auto border-t border-primary/10 p-4 transition-all duration-300">
-				<div
-					class="mb-3 flex items-center transition-all duration-300 {sidebarCollapsed
+			<div class="mt-auto border-t border-primary/15 p-3 transition-all duration-200 bg-[#FAFDFB]">
+				<a
+					href="/settings"
+					title={sidebarCollapsed ? 'Pengaturan Profil Admin' : ''}
+					class="mb-2.5 flex items-center rounded-lg p-1.5 transition-all duration-150 hover:bg-primary/10 {sidebarCollapsed
 						? 'justify-center px-0'
-						: 'gap-3 px-2'}"
+						: 'gap-2.5'}"
 				>
 					<div
-						class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-secondary/20 text-heading font-semibold text-sm"
+						class="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-secondary/30 text-heading font-bold text-xs border border-secondary/40"
 						title={sidebarCollapsed ? $authStore.admin?.name || 'Administrator' : ''}
 					>
 						{$authStore.admin?.name?.substring(0, 2).toUpperCase() || 'AD'}
 					</div>
 					{#if !sidebarCollapsed}
-						<div class="overflow-hidden">
-							<h4 class="truncate text-xs font-semibold text-heading leading-tight">
+						<div class="overflow-hidden text-left flex-1">
+							<h4 class="truncate text-xs font-bold text-heading leading-tight hover:text-primary">
 								{$authStore.admin?.name || 'Administrator'}
 							</h4>
 							<p class="truncate text-[10px] text-paragraph leading-tight">
@@ -171,28 +206,16 @@
 							</p>
 						</div>
 					{/if}
-				</div>
+				</a>
 
 				<button
 					onclick={handleLogout}
 					title={sidebarCollapsed ? 'Keluar Akun' : ''}
-					class="flex items-center justify-center gap-2 rounded-xl bg-red-50 py-2.5 text-xs font-semibold text-red-600 transition-all duration-200 hover:bg-red-100/80 active:scale-[0.98] {sidebarCollapsed
-						? 'w-12 mx-auto px-0'
-						: 'w-full px-4'}"
+					class="flex items-center justify-center gap-2 rounded-lg bg-rose-50 border border-rose-200/80 py-2 text-xs font-semibold text-rose-700 transition-all duration-150 hover:bg-rose-100 active:scale-[0.98] cursor-pointer {sidebarCollapsed
+						? 'w-10 mx-auto px-0'
+						: 'w-full px-3'}"
 				>
-					<svg
-						class="h-4 w-4 shrink-0"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-						/>
-					</svg>
+					<LogOut class="h-4 w-4 shrink-0" />
 					{#if !sidebarCollapsed}
 						<span>Keluar Akun</span>
 					{/if}
@@ -202,53 +225,57 @@
 
 		<!-- Main Workspace Area -->
 		<div
-			class="flex flex-1 flex-col transition-all duration-300 {sidebarCollapsed
+			class="flex flex-1 flex-col transition-all duration-200 {sidebarCollapsed
 				? 'pl-20'
 				: 'pl-64'}"
 		>
 			<!-- Header / Top Bar -->
 			<header
-				class="flex h-16 items-center justify-between border-b border-primary/10 bg-white px-8"
+				class="flex h-16 items-center justify-between border-b border-primary/20 bg-white px-6 md:px-10"
 			>
+
 				<div class="flex items-center gap-4">
 					<button
 						onclick={() => (sidebarCollapsed = !sidebarCollapsed)}
-						class="flex h-9 w-9 items-center justify-center rounded-xl border border-primary/10 bg-white text-paragraph hover:bg-primary/5 hover:text-primary transition-all duration-200 focus:outline-none cursor-pointer"
+						class="flex h-8 w-8 items-center justify-center rounded-lg border border-primary/20 bg-white text-heading hover:bg-primary/10 transition-all duration-150 focus:outline-none cursor-pointer"
 						aria-label="Toggle Sidebar"
 					>
 						{#if sidebarCollapsed}
-							<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M13 5l7 7-7 7M5 5l7 7-7 7"
-								/>
-							</svg>
+							<ChevronRight class="h-4 w-4" />
 						{:else}
-							<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M11 19l-7-7 7-7M19 19l-7-7 7-7"
-								/>
-							</svg>
+							<ChevronLeft class="h-4 w-4" />
 						{/if}
 					</button>
+
+					<div class="text-xs font-semibold text-paragraph flex items-center gap-1.5">
+						<span class="text-heading">Amertarva</span>
+						<span>/</span>
+						<span class="text-primary font-bold">
+							{$page.url.pathname === '/'
+								? 'Overview'
+								: $page.url.pathname === '/settings'
+									? 'Pengaturan Akun'
+									: $page.url.pathname.startsWith('/schools/new')
+										? 'Pendaftaran Sekolah'
+										: $page.url.pathname.startsWith('/schools')
+											? 'Kelola Tenant'
+											: 'Admin'}
+						</span>
+					</div>
 				</div>
+
 				<div class="flex items-center gap-4">
 					<div
-						class="flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold text-primary"
+						class="flex items-center gap-1.5 rounded-md border border-emerald-300 bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-800"
 					>
-						<span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-						Sistem Aktif
+						<span class="h-1.5 w-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
+						Registry Server Online
 					</div>
 				</div>
 			</header>
 
 			<!-- Content Panel -->
-			<main class="flex-1 p-8">
+			<main class="flex-1 p-6 md:px-10 md:py-8 w-full">
 				{@render children()}
 			</main>
 		</div>

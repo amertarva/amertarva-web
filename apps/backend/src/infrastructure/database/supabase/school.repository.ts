@@ -10,9 +10,18 @@ const COLUMN_MAP: Record<keyof School, string> = {
   status: "status",
   maxStorageGb: "max_storage_gb",
   storageAllocation: "storage_allocation",
+  serverApiKey: "server_api_key",
+  // Kolom durasi sewa
   rentDurationMonths: "rent_duration_months",
   rentStartDate: "rent_start_date",
   rentEndDate: "rent_end_date",
+  // Custom domain & Suspended status
+  customDomain: "custom_domain",
+  customDomainStatus: "custom_domain_status",
+  customDomainToken: "custom_domain_token",
+  customDomainVerifiedAt: "custom_domain_verified_at",
+  suspensionReason: "suspension_reason",
+  suspensionNotice: "suspension_notice",
   supaTeachersUrl: "supa_teachers_url",
   supaTeachersKey: "supa_teachers_key",
   supaStudentsUrl: "supa_students_url",
@@ -68,6 +77,27 @@ export class SupabaseSchoolRepository implements ISchoolRepository {
       .maybeSingle();
     return data ? rowToSchool(data) : null;
   }
+
+  // Cari by custom domain
+  async findByCustomDomain(domain: string): Promise<School | null> {
+    const { data } = await supabase
+      .from("schools_registry")
+      .select("*")
+      .eq("custom_domain", domain)
+      .maybeSingle();
+    return data ? rowToSchool(data) : null;
+  }
+
+  // Cari by Server API Key (untuk autentikasi Server-to-Server)
+  async findByServerApiKey(key: string): Promise<School | null> {
+    const { data } = await supabase
+      .from("schools_registry")
+      .select("*")
+      .eq("server_api_key", key)
+      .maybeSingle();
+    return data ? rowToSchool(data) : null;
+  }
+
 
   // Buat sekolah
   async create(

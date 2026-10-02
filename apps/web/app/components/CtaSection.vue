@@ -2,6 +2,13 @@
 import { MessageSquare, Mail, ShieldCheck } from 'lucide-vue-next'
 
 const { t, locale } = useI18n();
+const config = useRuntimeConfig();
+
+const whatsappUrl = computed(() => {
+  const phone = (config.public.whatsappPhone as string) || '6281234567890';
+  const text = encodeURIComponent('Halo Amertarva, saya ingin berdiskusi tentang proyek sistem/website');
+  return `https://wa.me/${phone}?text=${text}`;
+});
 
 const guarantees = computed(() => {
   if (locale.value === 'en') {
@@ -47,7 +54,7 @@ const guarantees = computed(() => {
         <div class="flex flex-wrap items-center justify-center gap-4 mb-12">
           <!-- WhatsApp Primary Action -->
           <a
-            href="https://wa.me/6281234567890?text=Halo%20Amertarva,%20saya%20ingin%20berdiskusi%20tentang%20proyek%20sistem/website"
+            :href="whatsappUrl"
             target="_blank"
             rel="noopener noreferrer"
             class="inline-flex items-center justify-center gap-3 bg-accent hover:bg-accent/90 text-accent-contrast font-sans text-sm sm:text-base font-semibold px-7 py-4 rounded-xl transition-all duration-300 hover:-translate-y-0.5 group min-w-[220px]"

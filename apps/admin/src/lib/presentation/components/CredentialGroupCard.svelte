@@ -8,8 +8,8 @@
 	export let configured: Record<string, boolean> = {};
 </script>
 
-<Card class="mb-4 p-4">
-	<h3 class="mb-3 font-semibold text-[#789D8E]">{title}</h3>
+<Card class="p-5 space-y-3.5 border border-primary/20">
+	<h3 class="font-bold text-heading text-sm pb-2 border-b border-primary/15">{title}</h3>
 	{#each fields as f}
 		<CredentialField
 			label={f.label}

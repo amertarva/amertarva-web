@@ -10,8 +10,10 @@
 
 	// Derived metrics
 	$: totalSchools = $schoolsStore.length;
-	$: activeSchools = $schoolsStore.filter((s) => s.status === 'ACTIVE').length;
-	$: pendingSchools = $schoolsStore.filter((s) => s.status === 'PENDING').length;
+	$: activeSchools = $schoolsStore.filter((s) => s.status === 'ACTIVE' && s.rent?.status !== 'EXPIRED').length;
+	$: suspendedSchools = $schoolsStore.filter((s) => s.status === 'SUSPENDED' || s.rent?.status === 'EXPIRED').length;
+	$: expiringSoonSchools = $schoolsStore.filter((s) => s.rent?.status === 'EXPIRING_SOON').length;
+	$: customDomainSchools = $schoolsStore.filter((s) => s.customDomain && s.customDomainStatus === 'ACTIVE').length;
 	$: totalStorage = $schoolsStore.reduce((acc, s) => acc + s.maxStorageGb, 0);
 
 	// Get latest 5 schools
@@ -30,7 +32,15 @@
 	</div>
 
 	<!-- Stats Grid -->
-	<DashboardStats {totalSchools} {activeSchools} {pendingSchools} {totalStorage} />
+	<DashboardStats 
+		{totalSchools} 
+		{activeSchools} 
+		{suspendedSchools} 
+		{expiringSoonSchools} 
+		{customDomainSchools} 
+		{totalStorage} 
+	/>
+
 
 	<!-- Dashboard Body Layout -->
 	<div class="grid gap-6 lg:grid-cols-3">

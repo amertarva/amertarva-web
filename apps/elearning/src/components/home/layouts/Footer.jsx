@@ -1,6 +1,8 @@
 import { Globe, Mail, MapPin } from 'lucide-preact';
 
 export default function Footer() {
+  const mainWebUrl = import.meta.env.PUBLIC_MAIN_WEB_URL || "http://localhost:4000";
+
   return (
     <footer className="bg-background pt-24 pb-10 border-t border-heading/10 relative overflow-hidden">
       <div className="container mx-auto px-6 md:px-12 relative z-10">
@@ -34,7 +36,7 @@ export default function Footer() {
             <h4 className="text-heading font-bold mb-6 uppercase tracking-wider text-sm">Ekosistem Amertarva</h4>
             <ul className="space-y-4">
               <li>
-                <a href="https://amertarva.vercel.app" className="group flex items-center gap-3 text-paragraph hover:text-primary transition-colors">
+                <a href={mainWebUrl} className="group flex items-center gap-3 text-paragraph hover:text-primary transition-colors">
                   <div className="w-10 h-10 rounded-xl bg-heading/5 flex items-center justify-center border border-heading/10 group-hover:bg-primary/10 group-hover:border-primary/20 transition-all">
                     <Globe className="w-5 h-5" />
                   </div>

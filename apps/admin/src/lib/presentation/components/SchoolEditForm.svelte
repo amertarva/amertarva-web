@@ -11,14 +11,18 @@
 		CREDENTIAL_GROUPS,
 		emptyCredentials
 	} from './credential-groups.config';
+	import { Check, AlertTriangle, Globe } from '@lucide/svelte';
 
 	export let school: SchoolDetail;
 
-	const ALLOCATION_TYPES = ['Supabase', 'AstraDB', 'MongoDB', 'Turso', 'NAS'];
+	const OPTIONAL_ALLOCATION_TYPES = ['AstraDB', 'MongoDB', 'Turso', 'NAS'];
 
 	let schoolName = '';
+	let subdomainSlug = '';
+	let customDomain = '';
+	let superAdminEmail = '';
 	let maxStorageGb = 5;
-	let storageAllocation: string[] = [];
+	let storageAllocation: string[] = ['Supabase'];
 	let credentials = emptyCredentials();
 	let configured: Record<string, boolean> = {};
 	let error = '';
@@ -26,8 +30,11 @@
 
 	onMount(() => {
 		schoolName = school.schoolName;
+		subdomainSlug = school.subdomainSlug;
+		customDomain = school.customDomain || '';
+		superAdminEmail = school.superAdminEmail || '';
 		maxStorageGb = school.maxStorageGb;
-		storageAllocation = [...school.storageAllocation];
+		storageAllocation = Array.from(new Set(['Supabase', ...(school.storageAllocation || [])]));
 
 		const c = school.credentials;
 		configured = {
@@ -47,6 +54,7 @@
 	});
 
 	function toggleStorage(db: string) {
+		if (db === 'Supabase') return; // Supabase is mandatory
 		if (storageAllocation.includes(db)) {
 			storageAllocation = storageAllocation.filter((s) => s !== db);
 		} else {
@@ -60,6 +68,9 @@
 		try {
 			const payload: Record<string, any> = {
 				schoolName,
+				subdomainSlug,
+				customDomain: customDomain.trim(),
+				superAdminEmail: superAdminEmail.trim() || null,
 				maxStorageGb,
 				storageAllocation
 			};
@@ -82,8 +93,14 @@
 			}
 			await updateSchool(school.schoolId, payload);
 			goto(`/schools/${school.schoolId}`);
-		} catch {
-			error = 'Gagal menyimpan perubahan';
+		} catch (e: any) {
+			if (e.message?.includes('SLUG_TAKEN')) {
+				error = 'Subdomain slug sudah digunakan oleh institusi lain.';
+			} else if (e.message?.includes('DOMAIN_TAKEN')) {
+				error = 'Domain kustom sudah digunakan oleh institusi lain.';
+			} else {
+				error = 'Gagal menyimpan perubahan: ' + (e.message || 'Error tidak diketahui');
+			}
 		} finally {
 			loading = false;
 		}
@@ -94,21 +111,60 @@
 	<!-- Form Info Utama -->
 	<div class="lg:col-span-3 space-y-6">
 		<Card class="p-6 space-y-5">
-			<h3 class="font-bold text-heading text-base pb-2 border-b border-primary/10">
-				Informasi Sekolah
+			<h3 class="font-bold text-heading text-base pb-2 border-b border-primary/15">
+				Informasi Sekolah & Routing Domain
 			</h3>
 
 			<div class="grid gap-4 sm:grid-cols-2">
-				<Input label="Nama Sekolah" placeholder="SMA Negeri 1 Jakarta" bind:value={schoolName} />
-				<label class="block">
-					<span class="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-heading/70"
+				<Input label="Nama Sekolah" bind:value={schoolName} />
+				<div>
+					<Input label="Subdomain Slug" bind:value={subdomainSlug} />
+					<p class="-mt-3 text-[11px] font-mono text-primary font-semibold">
+						URL: {subdomainSlug || '...'}.amertarva.com
+					</p>
+				</div>
+			</div>
+
+			<!-- Custom Domain Input -->
+			<div class="rounded-xl border border-primary/20 bg-primary/5 p-4 space-y-2">
+				<div class="flex items-center gap-2">
+					<Globe class="h-4 w-4 text-primary shrink-0" />
+					<h4 class="text-xs font-bold text-heading uppercase tracking-wider">
+						Domain Kustom Sekolah (Opsional)
+					</h4>
+				</div>
+				<p class="text-xs text-paragraph leading-relaxed">
+					Nama domain mandiri sekolah (misal: <code class="font-mono text-heading font-semibold">lms.sman1.sch.id</code>). Kosongkan jika sekolah hanya menggunakan subdomain Amertarva.
+				</p>
+				<Input
+					label="Domain Sendiri / FQDN"
+					placeholder="lms.sman1jkt.sch.id"
+					bind:value={customDomain}
+				/>
+			</div>
+
+			<div>
+				<Input
+					label="Email Super Admin Sekolah"
+					type="email"
+					placeholder="admin@sman1jkt.sch.id"
+					bind:value={superAdminEmail}
+				/>
+				<p class="text-xs text-paragraph mt-1">
+					Email akun Super Admin / Penanggung Jawab di sekolah ini.
+				</p>
+			</div>
+
+			<div class="grid gap-4 sm:grid-cols-2">
+				<label class="block mb-4">
+					<span class="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-heading/80"
 						>Max Storage (GB)</span
 					>
 					<input
 						type="number"
 						min="1"
 						bind:value={maxStorageGb}
-						class="w-full rounded-xl border border-primary/20 bg-[#F8FAF8]/50 px-3.5 py-2.5 text-sm text-heading placeholder-heading/40 transition-all duration-200 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20 focus:outline-none"
+						class="w-full rounded-lg border border-primary/25 bg-white px-3.5 py-2.5 text-sm text-heading placeholder-paragraph/40 transition-all duration-150 hover:border-primary/45 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20 focus:outline-none"
 					/>
 				</label>
 			</div>
@@ -116,41 +172,54 @@
 
 		<!-- Alokasi database section -->
 		<Card class="p-6 space-y-5">
-			<h3 class="font-bold text-heading text-base pb-2 border-b border-primary/10">
-				Alokasi Penyimpanan Database
-			</h3>
+			<div class="flex items-center justify-between pb-2 border-b border-primary/15">
+				<div>
+					<h3 class="font-bold text-heading text-base">
+						Alokasi Penyimpanan Database
+					</h3>
+					<p class="text-xs text-paragraph mt-0.5">
+						Supabase aktif secara bawaan untuk autentikasi & akun tenant. Database lain bersifat opsional.
+					</p>
+				</div>
+			</div>
 
 			<div class="grid gap-3 grid-cols-2 md:grid-cols-5">
-				{#each ALLOCATION_TYPES as db}
+				<!-- Supabase: Wajib & Otomatis Aktif -->
+				<div
+					class="flex flex-col items-center justify-center rounded-xl border border-primary bg-primary/10 text-primary p-3.5 text-center select-none shadow-xs font-bold ring-1 ring-primary relative"
+				>
+					<span class="absolute top-2 right-2 text-[10px] bg-primary text-white px-1.5 py-0.2 rounded font-bold uppercase tracking-wider">
+						Wajib
+					</span>
+					<div class="flex h-5 w-5 items-center justify-center rounded-full bg-primary text-white mb-2">
+						<Check class="h-3 w-3" />
+					</div>
+					<span class="text-xs font-bold tracking-wide">Supabase</span>
+				</div>
+
+				<!-- Database Tambahan Opsional -->
+				{#each OPTIONAL_ALLOCATION_TYPES as db}
 					<button
 						type="button"
 						on:click={() => toggleStorage(db)}
-						class="flex flex-col items-center justify-center rounded-2xl border p-4 text-center transition-all duration-200 select-none {storageAllocation.includes(
+						class="flex flex-col items-center justify-center rounded-xl border p-3.5 text-center transition-all duration-150 select-none cursor-pointer {storageAllocation.includes(
 							db
 						)
-							? 'border-primary bg-primary/5 text-primary ring-2 ring-primary/20 shadow-sm'
-							: 'border-primary/10 bg-[#F8FAF8]/30 text-heading hover:bg-primary/5 hover:border-primary/30'}"
+							? 'border-primary bg-primary/10 text-primary ring-1 ring-primary shadow-xs font-bold'
+							: 'border-primary/20 bg-white text-heading hover:bg-primary/5 hover:border-primary/40'}"
 					>
-						<!-- Checkmark / Bullet indicator -->
 						<div
-							class="flex h-5 w-5 items-center justify-center rounded-full border mb-3 transition-colors {storageAllocation.includes(
+							class="flex h-5 w-5 items-center justify-center rounded-full border mb-2 transition-colors {storageAllocation.includes(
 								db
 							)
 								? 'bg-primary border-primary text-white'
-								: 'border-heading/20'}"
+								: 'border-heading/30'}"
 						>
 							{#if storageAllocation.includes(db)}
-								<svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="3"
-										d="M5 13l4 4L19 7"
-									/>
-								</svg>
+								<Check class="h-3 w-3" />
 							{/if}
 						</div>
-						<span class="text-xs font-bold uppercase tracking-wider">{db}</span>
+						<span class="text-xs font-bold tracking-wide">{db}</span>
 					</button>
 				{/each}
 			</div>
@@ -168,57 +237,34 @@
 	</div>
 
 	<!-- Right side layout helper -->
-	<div class="lg:col-span-1 lg:sticky lg:top-8 h-fit space-y-6">
-		<Card class="p-6 space-y-4">
+	<div class="lg:col-span-1 lg:sticky lg:top-8 h-fit space-y-4">
+		<Card class="p-5 space-y-3.5">
 			<h4 class="font-bold text-heading text-sm">Petunjuk Perubahan</h4>
-			<p class="text-xs text-paragraph">
-				Kolom password / API key yang bertanda <span class="text-primary font-bold">✓ tersimpan</span
-				> sudah memiliki data enkripsi di server. Anda hanya perlu mengisinya kembali jika ingin melakukan
-				penggantian/update data kredensial.
+			<p class="text-xs text-paragraph leading-relaxed">
+				Kosongkan kolom kredensial jika Anda tidak ingin mengubah nilai koneksi database yang sudah tersimpan sebelumnya.
 			</p>
-			<hr class="border-primary/10" />
-			<ul class="space-y-3 text-xs text-paragraph">
-				<li class="flex gap-2">
-					<span class="text-primary font-bold">•</span>
-					<span>Perubahan nama sekolah akan langsung berdampak pada tampilan panel sekolah.</span>
-				</li>
-				<li class="flex gap-2">
-					<span class="text-primary font-bold">•</span>
-					<span>Jika Anda menghapus centang alokasi database, konfigurasi tersimpan untuk DB tersebut akan tetap aman namun dinonaktifkan dalam alokasi aktif.</span>
-				</li>
-			</ul>
 		</Card>
 
 		{#if error}
 			<div
-				class="flex items-center gap-2 rounded-xl bg-red-50 p-4 text-xs font-medium text-red-600 border border-red-100 shadow-sm"
+				class="flex items-center gap-2 rounded-lg bg-rose-50 p-3 text-xs font-medium text-rose-700 border border-rose-200"
 			>
-				<svg class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-					/>
-				</svg>
+				<AlertTriangle class="h-4 w-4 shrink-0 text-rose-600" />
 				<span>{error}</span>
 			</div>
 		{/if}
 
-		<Button variant="primary" on:click={handleSubmit} disabled={loading} class="w-full py-3 shadow-md">
-			{#if loading}
-				<svg class="mr-2 h-4 w-4 animate-spin text-white" fill="none" viewBox="0 0 24 24">
-					<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
-					<path
-						class="opacity-75"
-						fill="currentColor"
-						d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-					/>
-				</svg>
-				Menyimpan...
-			{:else}
-				Simpan Perubahan
-			{/if}
-		</Button>
+		<div class="space-y-2">
+			<Button variant="primary" on:click={handleSubmit} disabled={loading} class="w-full py-2.5 shadow-sm">
+				{#if loading}
+					Menyimpan...
+				{:else}
+					Simpan Perubahan
+				{/if}
+			</Button>
+			<Button variant="outline" on:click={() => goto(`/schools/${school.schoolId}`)} class="w-full py-2">
+				Batal
+			</Button>
+		</div>
 	</div>
 </div>

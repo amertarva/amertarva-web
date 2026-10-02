@@ -23,4 +23,17 @@ export class SupabaseLordAdminRepository implements ILordAdminRepository {
       .maybeSingle();
     return data as LordAdmin | null;
   }
+
+  // Update data Lord Admin
+  async update(id: string, patch: Partial<LordAdmin>): Promise<LordAdmin> {
+    const { data, error } = await supabase
+      .from("lord_admins")
+      .update(patch)
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) throw new Error(error.message);
+    return data as LordAdmin;
+  }
 }

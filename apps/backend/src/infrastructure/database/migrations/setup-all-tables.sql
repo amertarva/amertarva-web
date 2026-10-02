@@ -58,6 +58,14 @@ CREATE TABLE IF NOT EXISTS schools_registry (
   rent_start_date      TIMESTAMPTZ,
   rent_end_date        TIMESTAMPTZ,
 
+  -- Custom domain & Suspended status (dari add-custom-domain-and-status-fields.sql)
+  custom_domain              TEXT UNIQUE,
+  custom_domain_status       TEXT DEFAULT 'NONE',
+  custom_domain_token        TEXT,
+  custom_domain_verified_at  TIMESTAMPTZ,
+  suspension_reason          TEXT,
+  suspension_notice          TEXT,
+
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -73,7 +81,11 @@ CREATE TRIGGER schools_registry_updated_at
   BEFORE UPDATE ON schools_registry
   FOR EACH ROW EXECUTE FUNCTION update_updated_at();
 
--- 4. Index sewa
+-- 4. Index sewa & domain
 CREATE INDEX IF NOT EXISTS idx_schools_rent_end_date
   ON schools_registry (rent_end_date)
   WHERE rent_end_date IS NOT NULL;
+
+CREATE INDEX IF NOT EXISTS idx_schools_custom_domain
+  ON schools_registry (custom_domain)
+  WHERE custom_domain IS NOT NULL;

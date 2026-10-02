@@ -1,4 +1,4 @@
-const DEFAULT_PHONE = "6281234567890";
+const DEFAULT_PHONE = (typeof process !== 'undefined' && process.env?.NUXT_PUBLIC_WHATSAPP_PHONE) || "6281234567890";
 
 /**
  * Generate localized WhatsApp URL for a specific service inquiry

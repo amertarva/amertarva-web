@@ -25,11 +25,15 @@ export function toSchoolSummary(school: School) {
     schoolId: school.schoolId,
     schoolName: school.schoolName,
     subdomainSlug: school.subdomainSlug,
+    customDomain: school.customDomain ?? null,
+    customDomainStatus: school.customDomainStatus ?? "NONE",
     planType: school.planType,
     status: school.status,
+    suspensionReason: school.suspensionReason ?? null,
     maxStorageGb: school.maxStorageGb,
     storageAllocation: school.storageAllocation,
     initStatus: school.initStatus,
+    superAdminEmail: school.superAdminEmail ?? null,
     rent: {
       durationMonths: school.rentDurationMonths,
       startDate: school.rentStartDate,
@@ -47,8 +51,14 @@ export function toSchoolDetail(school: School) {
     schoolId: school.schoolId,
     schoolName: school.schoolName,
     subdomainSlug: school.subdomainSlug,
+    customDomain: school.customDomain ?? null,
+    customDomainStatus: school.customDomainStatus ?? "NONE",
+    customDomainToken: school.customDomainToken ?? null,
+    customDomainVerifiedAt: school.customDomainVerifiedAt ?? null,
     planType: school.planType,
     status: school.status,
+    suspensionReason: school.suspensionReason ?? null,
+    suspensionNotice: school.suspensionNotice ?? null,
     maxStorageGb: school.maxStorageGb,
     storageAllocation: school.storageAllocation,
     initStatus: school.initStatus,
@@ -80,3 +90,4 @@ export function toSchoolDetail(school: School) {
     },
   };
 }
+

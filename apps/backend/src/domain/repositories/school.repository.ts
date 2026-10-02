@@ -4,6 +4,9 @@ export interface ISchoolRepository {
   findAll(): Promise<School[]>;
   findById(schoolId: string): Promise<School | null>;
   findBySlug(slug: string): Promise<School | null>;
+  findByCustomDomain(domain: string): Promise<School | null>;
+  findByServerApiKey(key: string): Promise<School | null>;
   create(school: Omit<School, "createdAt" | "updatedAt">): Promise<School>;
   update(schoolId: string, patch: Partial<School>): Promise<School>;
 }
+

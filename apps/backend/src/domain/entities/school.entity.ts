@@ -1,6 +1,8 @@
 export type PlanType = "CLASSIC" | "PRO" | "PREMIUM" | "CUSTOM";
-export type SchoolStatus = "PENDING" | "ACTIVE" | "SUSPENDED";
+export type SchoolStatus = "PENDING" | "ACTIVE" | "SUSPENDED" | "MAINTENANCE";
 export type InitStatus = "NOT_STARTED" | "IN_PROGRESS" | "DONE" | "FAILED";
+export type CustomDomainStatus = "NONE" | "PENDING_DNS" | "ACTIVE" | "FAILED";
+export type SuspensionReason = "ADMIN_SUSPENDED" | "SUBSCRIPTION_EXPIRED" | "MAINTENANCE" | "VIOLATION";
 
 // Computed dari rentEndDate — tidak disimpan di DB
 export type RentStatus = "ACTIVE" | "EXPIRING_SOON" | "EXPIRED" | "NONE";
@@ -14,10 +16,21 @@ export interface School {
   maxStorageGb: number;
   storageAllocation: string[];
 
+  // Kunci statis permanen untuk autentikasi Server-to-Server (Server Go Sekolah <-> Master Admin)
+  serverApiKey: string;
+
   // Durasi penyewaan
   rentDurationMonths: number | null;
   rentStartDate: string | null;
   rentEndDate: string | null;
+
+  // Custom Domain & Suspended State
+  customDomain: string | null;
+  customDomainStatus: CustomDomainStatus;
+  customDomainToken: string | null;
+  customDomainVerifiedAt: string | null;
+  suspensionReason: SuspensionReason | null;
+  suspensionNotice: string | null;
 
   // Semua field di bawah disimpan TERENKRIPSI (AES-256-GCM)
   supaTeachersUrl: string;

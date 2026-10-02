@@ -15,10 +15,9 @@ export default defineConfig({
 
     server: {
       proxy: {
-        // Proxy /api/* → backend (dev only)
-        // Di production, gunakan env PUBLIC_BACKEND_URL
+        // Proxy /api/* → backend
         '/api': {
-          target: 'http://localhost:3000',
+          target: process.env.BACKEND_URL || process.env.PUBLIC_BACKEND_URL || 'http://localhost:3000',
           changeOrigin: true,
         },
       },

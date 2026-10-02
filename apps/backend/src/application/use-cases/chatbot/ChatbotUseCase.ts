@@ -145,8 +145,8 @@ ATURAN KEAMANAN & ANTI-EKSPLOITASI (MUTLAK & TERKUNCI):
           headers: {
             "Authorization": `Bearer ${this.apiKey}`,
             "Content-Type": "application/json",
-            "HTTP-Referer": "https://amertarva.com",
-            "X-Title": "Amertarva E-Learning",
+            "HTTP-Referer": process.env.APP_URL || "https://amertarva.com",
+            "X-Title": process.env.APP_TITLE || "Amertarva E-Learning",
           },
           body: JSON.stringify(payload),
         });

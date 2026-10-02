@@ -6,6 +6,13 @@ export default defineNuxtConfig({
     port: 4000,
   },
   modules: ["@nuxtjs/tailwindcss", "motion-v/nuxt"],
+  runtimeConfig: {
+    public: {
+      apiUrl: process.env.NUXT_PUBLIC_API_URL || 'http://localhost:3000',
+      elearningUrl: process.env.NUXT_PUBLIC_ELEARNING_URL || 'http://localhost:4321',
+      whatsappPhone: process.env.NUXT_PUBLIC_WHATSAPP_PHONE || '6281234567890',
+    },
+  },
   css: ["~/assets/css/themes.css"],
   nitro: {
     preset: 'vercel'

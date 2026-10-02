@@ -24,6 +24,8 @@ const CredentialFieldsSchema = {
 export const CreateSchoolBody = t.Object({
   schoolName: t.String({ minLength: 3 }),
   subdomainSlug: t.String({ pattern: "^[a-z0-9-]+$", minLength: 3 }),
+  customDomain: t.Optional(t.String()),
+  superAdminEmail: t.Optional(t.String({ format: "email" })),
   planType: t.Union([
     t.Literal("CLASSIC"),
     t.Literal("PRO"),
@@ -45,6 +47,15 @@ export type CreateSchoolDto = typeof CreateSchoolBody.static;
 export const UpdateSchoolBody = t.Partial(
   t.Object({
     schoolName: t.String({ minLength: 3 }),
+    subdomainSlug: t.String({ pattern: "^[a-z0-9-]+$", minLength: 3 }),
+    customDomain: t.Optional(t.String()),
+    superAdminEmail: t.Optional(t.String()),
+    initStatus: t.Union([
+      t.Literal("NOT_STARTED"),
+      t.Literal("IN_PROGRESS"),
+      t.Literal("DONE"),
+      t.Literal("FAILED"),
+    ]),
     planType: t.Union([
       t.Literal("CLASSIC"),
       t.Literal("PRO"),
@@ -75,3 +86,42 @@ export const ExtendRentBody = t.Object({
   }),
 });
 export type ExtendRentDto = typeof ExtendRentBody.static;
+
+// Body untuk update status sekolah (On/Off / Maintenance)
+export const UpdateSchoolStatusBody = t.Object({
+  status: t.Union([
+    t.Literal("ACTIVE"),
+    t.Literal("SUSPENDED"),
+    t.Literal("MAINTENANCE"),
+    t.Literal("PENDING"),
+  ]),
+  suspensionReason: t.Optional(
+    t.Union([
+      t.Literal("ADMIN_SUSPENDED"),
+      t.Literal("SUBSCRIPTION_EXPIRED"),
+      t.Literal("MAINTENANCE"),
+      t.Literal("VIOLATION"),
+    ])
+  ),
+  suspensionNotice: t.Optional(t.String()),
+});
+export type UpdateSchoolStatusDto = typeof UpdateSchoolStatusBody.static;
+
+// Body untuk set custom domain
+export const SetCustomDomainBody = t.Object({
+  customDomain: t.String({
+    pattern: "^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,}$",
+    minLength: 4,
+    description: "Domain kustom sekolah (contoh: lms.sman1.sch.id)",
+  }),
+});
+export type SetCustomDomainDto = typeof SetCustomDomainBody.static;
+
+// Body untuk inisialisasi database sekolah & super admin
+export const InitializeSchoolBody = t.Object({
+  superAdminEmail: t.Optional(t.String({ format: "email" })),
+  superAdminPassword: t.Optional(t.String({ minLength: 6 })),
+  generatePassword: t.Optional(t.Boolean()),
+});
+export type InitializeSchoolDto = typeof InitializeSchoolBody.static;
+

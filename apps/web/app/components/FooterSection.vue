@@ -8,21 +8,21 @@ const currentYear = new Date().getFullYear();
 const serviceLinks = computed(() => {
   if (locale.value === 'en') {
     return [
-      { label: 'Landing Page & Corporate', href: '/services/landing-page' },
-      { label: 'E-commerce System', href: '/services/ecommerce' },
-      { label: 'Learning Management System', href: '/services/lms' },
-      { label: 'Custom Web Application', href: '/services/custom-web-app' },
-      { label: 'Mobile Apps (Android & iOS)', href: '/services/custom-mobile-app' },
-      { label: 'Maintenance & Updates', href: '/services/maintenance' },
+      { label: 'Landing Page & Corporate', href: '/#services' },
+      { label: 'E-commerce System', href: '/#services' },
+      { label: 'Learning Management System', href: '/#services' },
+      { label: 'Custom Web Application', href: '/#services' },
+      { label: 'Mobile Apps (Android & iOS)', href: '/#services' },
+      { label: 'Maintenance & Updates', href: '/#services' },
     ];
   }
   return [
-    { label: 'Landing Page & Perusahaan', href: '/services/landing-page' },
-    { label: 'Sistem Toko E-commerce', href: '/services/ecommerce' },
-    { label: 'Platform E-Learning LMS', href: '/services/lms' },
-    { label: 'Aplikasi Web Kustom', href: '/services/custom-web-app' },
-    { label: 'Aplikasi Mobile (Android & iOS)', href: '/services/custom-mobile-app' },
-    { label: 'Pemeliharaan & Update', href: '/services/maintenance' },
+    { label: 'Landing Page & Perusahaan', href: '/#services' },
+    { label: 'Sistem Toko E-commerce', href: '/#services' },
+    { label: 'Platform E-Learning LMS', href: '/#services' },
+    { label: 'Aplikasi Web Kustom', href: '/#services' },
+    { label: 'Aplikasi Mobile (Android & iOS)', href: '/#services' },
+    { label: 'Pemeliharaan & Update', href: '/#services' },
   ];
 });
 
