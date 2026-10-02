@@ -1,4 +1,4 @@
-import { nanoid } from "nanoid";
+import { nanoid } from "../../../infrastructure/crypto/nanoid";
 import type { ISchoolRepository } from "../../../domain/repositories/school.repository";
 import type { IEncryptionService } from "../../../domain/services/encryption.service";
 import type { UpdateSchoolDto } from "../../dtos/school.dto";

@@ -1,5 +1,5 @@
-import { nanoid } from "nanoid";
-import { randomBytes } from "crypto";
+import { nanoid } from "../../../infrastructure/crypto/nanoid";
+import { randomBytes } from "node:crypto";
 import type { ISchoolRepository } from "../../../domain/repositories/school.repository";
 import type { IEncryptionService } from "../../../domain/services/encryption.service";
 import type { CreateSchoolDto } from "../../dtos/school.dto";
