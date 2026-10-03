@@ -1,5 +1,5 @@
 import { Elysia } from "elysia";
-import app from "./presentation/index";
+import app from "./src/presentation/index";
 
 export { app };
 export default app;
