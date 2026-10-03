@@ -1,3 +1,4 @@
+import { env } from '$env/dynamic/public';
 import { PUBLIC_API_URL } from '$env/static/public';
 import { get } from 'svelte/store';
 import { authStore } from '../../application/stores/auth.store';
@@ -18,7 +19,10 @@ export async function apiFetch(path: string, options: RequestInit = {}) {
 		}
 	}
 
-	const res = await fetch(`${PUBLIC_API_URL}${path}`, {
+	const rawBaseUrl = env.PUBLIC_API_URL || PUBLIC_API_URL || 'http://localhost:3000';
+	const baseUrl = rawBaseUrl.replace(/\/$/, '');
+
+	const res = await fetch(`${baseUrl}${path}`, {
 		...options,
 		body: sanitizedBody,
 		headers: {
