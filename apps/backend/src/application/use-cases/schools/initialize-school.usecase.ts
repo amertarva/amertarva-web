@@ -70,6 +70,9 @@ export async function initializeSchoolUseCase(
   try {
     // 1. Eksekusi Pembuatan Tabel Otomatis (DDL Migration) di Database Supabase Sekolah
     const migrationResult = await executeTenantSqlMigration(teachersUrl, teachersKey);
+    if (!migrationResult.success) {
+      throw new Error(`Migrasi tabel gagal: ${migrationResult.message}`);
+    }
 
     // 2. Inisialisasi Supabase Client dengan Service Role Key
     const supabaseClient = createClient(teachersUrl, teachersKey, {
@@ -153,7 +156,10 @@ export async function initializeSchoolUseCase(
 
         NOTIFY pgrst, 'reload schema';
       `;
-      await executeTenantSql(teachersUrl, teachersKey, insertUserSql);
+      const insertResult = await executeTenantSql(teachersUrl, teachersKey, insertUserSql);
+      if (!insertResult.success) {
+        throw new Error(`Gagal menyimpan data Super Admin: ${insertResult.message}`);
+      }
     }
 
     // 4. Update status inisialisasi di registry menjadi DONE

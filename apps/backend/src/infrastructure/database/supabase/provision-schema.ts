@@ -233,7 +233,9 @@ INSERT INTO feature_flags (key, enabled, scope) VALUES
   ('feature_ai_assistant', TRUE, 'global'),
   ('feature_anti_cheat', TRUE, 'global'),
   ('feature_video_learning', TRUE, 'global'),
-  ('feature_reminders', TRUE, 'global'),
+  ('feature_reminders', TRUE, 'global')
+ON CONFLICT (key, scope) DO NOTHING;
+
 -- 16. Reload PostgREST Schema Cache
 NOTIFY pgrst, 'reload schema';
 `;
@@ -247,6 +249,7 @@ export async function executeTenantSql(
   const match = supabaseUrl.match(/https?:\/\/([^.]+)\.supabase\.co/i);
   const projectRef = match ? match[1] : null;
   const accessToken = customAccessToken || process.env.SUPABASE_ACCESS_TOKEN;
+  let lastError = "";
 
   if (projectRef && accessToken) {
     try {
@@ -268,8 +271,10 @@ export async function executeTenantSql(
       }
       const errText = await res.text();
       console.warn("Supabase Management API query failed:", errText);
+      lastError = `Management API (${res.status}): ${errText}`;
     } catch (err: any) {
       console.warn("Error calling Supabase Management API:", err.message);
+      lastError = `Management API: ${err.message}`;
     }
   }
 
@@ -298,7 +303,7 @@ export async function executeTenantSql(
   return {
     success: false,
     method: "NONE",
-    message: "Gagal mengeksekusi SQL.",
+    message: lastError || "Gagal mengeksekusi SQL (SUPABASE_ACCESS_TOKEN belum diatur dan RPC exec_sql tidak tersedia).",
   };
 }
 
